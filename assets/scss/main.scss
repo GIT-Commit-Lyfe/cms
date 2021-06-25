@@ -1,0 +1,94 @@
+// @import 'partials/vfg';
+// @import 'partials/vfg-core';
+
+
+* {
+  box-sizing: border-box;
+  // font-size: 14px;
+}
+
+$black: #0F1626;
+$lightbrown: #CFBA9B;
+$gray1: #F1F1F1;
+$gray2: #F0F0F0;
+$gray3: #C4C4C4;
+$green: #009D06;
+$color: #FF533D;
+$darkgold: #FDCB1B;
+$skyblue: #369FF7;
+
+.lightbrown {
+  color: $lightbrown;
+}
+
+//-- custom scrollbar
+::-webkit-scrollbar {
+  width: 2px;
+  &-track {
+    background: $gray1;
+  }
+  &-thumb {
+    opacity: .8;
+    background: $lightbrown;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+fieldset {
+  border: none;
+}
+
+.vue-form-generator {
+  fieldset {
+    display: flex;
+    padding: 0 5%;
+    flex-wrap: wrap;
+    .field-input, .field-select, .field-textArea, .field-image {
+      width: 50%;
+      padding: 0 3%;
+    }
+    .field-submit {
+      .field-wrap {
+        justify-content: center;
+        margin: 40px 0;
+      }
+      input {
+        background-color: $green !important;
+        border-color: $green !important;
+      }
+    }
+  }
+  .form-control {
+    padding: 8px 12px !important;
+  }
+}
+
+.v-application {
+  .error {
+    background-color: transparent !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .vue-form-generator {
+    fieldset {
+      .field-input, .field-select, .field-textArea, .field-image {
+        padding: 0 2%;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .vue-form-generator {
+    fieldset {
+      .field-input, .field-select, .field-textArea, .field-image {
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+}

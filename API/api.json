@@ -1,0 +1,334 @@
+{
+  "accompanies": [
+    {
+      "id": "accompany_1",
+      "accompany_name": "Lorem ipsum"
+    },
+    {
+      "id": "accompany_2",
+      "accompany_name": "Lorem ipsum"
+    },
+    {
+      "id": "accompany_3",
+      "accompany_name": "Lorem ipsum"
+    }
+  ],
+
+  "bazel_materials": [
+    {
+      "id": "material_1",
+      "material_name": "Lorem ipsum"
+    },
+    {
+      "id": "material_2",
+      "material_name": "Lorem ipsum"
+    },
+    {
+      "id": "material_3",
+      "material_name": "Lorem ipsum"
+    }
+  ],
+
+  "bracelet_colors": [
+    {
+      "id": "color_1",
+      "color_name": "Lorem ipsum"
+    },
+    {
+      "id": "color_2",
+      "color_name": "Lorem ipsum"
+    },
+    {
+      "id": "color_3",
+      "color_name": "Lorem ipsum"
+    }
+  ],
+
+  "bracelet_materials": [
+    {
+      "id": "material_1",
+      "material_name": "Lorem ipsum"
+    },
+    {
+      "id": "material_2",
+      "material_name": "Lorem ipsum"
+    },
+    {
+      "id": "material_3",
+      "material_name": "Lorem ipsum"
+    }
+  ],
+
+  "brands": [
+    {
+      "id": "brand_1",
+      "brand_name": "Rollex"
+    },
+    {
+      "id": "brand_2",
+      "brand_name": "Quartz"
+    },
+    {
+      "id": "brand_3",
+      "brand_name": "G-Shock"
+    }
+  ],
+
+  "calibers": [
+    {
+      "id": "caliber_1",
+      "caliber_name": "Rollex Rollex",
+      "brand_id": ""
+    },
+    {
+      "id": "caliber_2",
+      "caliber_name": "Quartz Quartz",
+      "brand_id": ""
+    },
+    {
+      "id": "caliber_3",
+      "caliber_name": "G-Shock G-Shock",
+      "brand_id": ""
+    }
+  ],
+
+  "clasp_materials": [
+    {
+      "id": "material_1",
+      "material_name": "Rollex"
+    },
+    {
+      "id": "material_2",
+      "material_name": "Quartz"
+    },
+    {
+      "id": "material_3",
+      "material_name": "G-Shock"
+    }
+  ],
+
+  "clasps": [
+    {
+      "id": "clasp_1",
+      "clasp_name": "Rollex"
+    },
+    {
+      "id": "clasp_2",
+      "clasp_name": "Quartz"
+    },
+    {
+      "id": "clasp_3",
+      "clasp_name": "G-Shock"
+    }
+  ],
+  
+  "conditions": [
+    {
+      "id": "conditions_1",
+      "conditions_name": "Rollex"
+    },
+    {
+      "id": "conditions_2",
+      "conditions_name": "Quartz"
+    },
+    {
+      "id": "conditions_3",
+      "conditions_name": "G-Shock"
+    }
+  ],
+
+  "dial_materials": [
+    {
+      "id": "material_1",
+      "material_name": "Rollex"
+    },
+    {
+      "id": "material_2",
+      "material_name": "Quartz"
+    },
+    {
+      "id": "material_3",
+      "material_name": "G-Shock"
+    }
+  ],
+  
+  "functions": [
+    {
+      "id": "function_1",
+      "function_name": "Rollex"
+    },
+    {
+      "id": "function_2",
+      "function_name": "Quartz"
+    },
+    {
+      "id": "function_3",
+      "function_name": "G-Shock"
+    }
+  ],
+
+  "models": [
+    {
+      "id": "model_1",
+      "modal_name": "Rollex Rollex",
+      "brandId": ""
+    },
+    {
+      "id": "model_2",
+      "modal_name": "Quartz Quartz",
+      "brandId": ""
+    },
+    {
+      "id": "model_3",
+      "modal_name": "G-Shock G-Shock",
+      "brandId": ""
+    }
+  ],
+  
+  "movements": [
+    {
+      "id": "movements_1",
+      "movements_name": "Rollex"
+    },
+    {
+      "id": "movements_2",
+      "movements_name": "Quartz"
+    },
+    {
+      "id": "movements_3",
+      "movements_name": "G-Shock"
+    }
+  ],
+
+  "products": [
+    {
+      "id": "product_1",
+      "referenceId": "",
+      "year": 2020,
+      "currency": "EUR",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
+    },
+    {
+      "id": "product_2",
+      "referenceId": "",
+      "year": 2021,
+      "currency": "USD",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
+    },
+    {
+      "id": "product_3",
+      "referenceId": "",
+      "year": 2019,
+      "currency": "DIR",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
+    }
+  ],
+
+  "references": [
+    {
+      "id": "reference_1",
+      "modelId": "model_1",
+      "reference_number": "reverence_1",
+      "movementId": "movement_1",
+      "power_reserve": "lorem",
+      "caliberId": "caliber_1",
+      "number_of_jevel": "lorem",
+      "case_material": "lorem",
+      "case_diameter": "lorem",
+      "case_thickness": "lorem",
+      "water_resistance": "lorem",
+      "bezelMaterial": "material_1",
+      "dialMaterialId": "material_1",
+      "dial_numeral": "lorem",
+      "glass": "lorem",
+      "braceletMaterialId": "material_1",
+      "braceletColorId": "color_1",
+      "claspdI": "clasp_1",
+      "claspMaterialId": "material_1",
+      "functionId": "function_1",
+      "street_name": "lorem",
+      "lug_width": "lorem",
+      "instroduce_at": "lorem",
+      "discontinue_at": "lirem",
+      "other_info": "lorem"
+    },
+    {
+      "id": "reference_2",
+      "modelId": "model_2",
+      "reference_number": "reverence_2",
+      "movementId": "movement_2",
+      "power_reserve": "lorem",
+      "caliberId": "caliber_2",
+      "number_of_jevel": "lorem",
+      "case_material": "lorem",
+      "case_diameter": "lorem",
+      "case_thickness": "lorem",
+      "water_resistance": "lorem",
+      "bezelMaterial": "material_2",
+      "dialMaterialId": "material_2",
+      "dial_numeral": "lorem",
+      "glass": "lorem",
+      "braceletMaterialId": "material_2",
+      "braceletColorId": "color_2",
+      "claspdI": "clasp_2",
+      "claspMaterialId": "material_2",
+      "functionId": "function_2",
+      "street_name": "lorem",
+      "lug_width": "lorem",
+      "instroduce_at": "lorem",
+      "discontinue_at": "lirem",
+      "other_info": "lorem"
+    },
+    {
+      "id": "reference_3",
+      "modelId": "model_3",
+      "reference_number": "reverence_3",
+      "movementId": "movement_3",
+      "power_reserve": "lorem",
+      "caliberId": "caliber_3",
+      "number_of_jevel": "lorem",
+      "case_material": "lorem",
+      "case_diameter": "lorem",
+      "case_thickness": "lorem",
+      "water_resistance": "lorem",
+      "bezelMaterial": "material_3",
+      "dialMaterialId": "material_3",
+      "dial_numeral": "lorem",
+      "glass": "lorem",
+      "braceletMaterialId": "material_3",
+      "braceletColorId": "color_3",
+      "claspdI": "clasp_3",
+      "claspMaterialId": "material_3",
+      "functionId": "function_3",
+      "street_name": "lorem",
+      "lug_width": "lorem",
+      "instroduce_at": "lorem",
+      "discontinue_at": "lirem",
+      "other_info": "lorem"
+    }
+  ]
+}
