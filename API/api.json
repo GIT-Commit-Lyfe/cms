@@ -121,6 +121,29 @@
       "clasp_name": "G-Shock"
     }
   ],
+
+  "collections": [
+    {
+      "id": "collections_1",
+      "collections_name": "Rollex Rollex",
+      "brandId": "brand_1"
+    },
+    {
+      "id": "collections_2",
+      "collections_name": "Quartz Quartz",
+      "brandId": "brand_1"
+    },
+    {
+      "id": "collections_3",
+      "collections_name": "G-Shock G-Shock",
+      "brandId": "brand_2"
+    },
+    {
+      "id": "collections_3",
+      "collections_name": "G-Shock G-Shock",
+      "brandId": "brand_3"
+    }
+  ],
   
   "conditions": [
     {
@@ -168,87 +191,6 @@
   ],
 
   "models": [
-    {
-      "id": "model_1",
-      "modal_name": "Rollex Rollex",
-      "brandId": ""
-    },
-    {
-      "id": "model_2",
-      "modal_name": "Quartz Quartz",
-      "brandId": ""
-    },
-    {
-      "id": "model_3",
-      "modal_name": "G-Shock G-Shock",
-      "brandId": ""
-    }
-  ],
-  
-  "movements": [
-    {
-      "id": "movements_1",
-      "movements_name": "Rollex"
-    },
-    {
-      "id": "movements_2",
-      "movements_name": "Quartz"
-    },
-    {
-      "id": "movements_3",
-      "movements_name": "G-Shock"
-    }
-  ],
-
-  "products": [
-    {
-      "id": "product_1",
-      "referenceId": "",
-      "year": 2020,
-      "currency": "EUR",
-      "price": 1000,
-      "description": "Lorem ipsum dolor sit amet",
-      "top_image": "",
-      "crown_side_image": "",
-      "case_back_image": "",
-      "show_of_image": "",
-      "conditionId": "",
-      "accompanyId": "",
-      "storeId": "store_id"
-    },
-    {
-      "id": "product_2",
-      "referenceId": "",
-      "year": 2021,
-      "currency": "USD",
-      "price": 1000,
-      "description": "Lorem ipsum dolor sit amet",
-      "top_image": "",
-      "crown_side_image": "",
-      "case_back_image": "",
-      "show_of_image": "",
-      "conditionId": "",
-      "accompanyId": "",
-      "storeId": "store_id"
-    },
-    {
-      "id": "product_3",
-      "referenceId": "",
-      "year": 2019,
-      "currency": "DIR",
-      "price": 1000,
-      "description": "Lorem ipsum dolor sit amet",
-      "top_image": "",
-      "crown_side_image": "",
-      "case_back_image": "",
-      "show_of_image": "",
-      "conditionId": "",
-      "accompanyId": "",
-      "storeId": "store_id"
-    }
-  ],
-
-  "references": [
     {
       "id": "reference_1",
       "modelId": "model_1",
@@ -329,6 +271,69 @@
       "instroduce_at": "lorem",
       "discontinue_at": "lirem",
       "other_info": "lorem"
+    }
+  ],
+  
+  "movements": [
+    {
+      "id": "movements_1",
+      "movements_name": "Rollex"
+    },
+    {
+      "id": "movements_2",
+      "movements_name": "Quartz"
+    },
+    {
+      "id": "movements_3",
+      "movements_name": "G-Shock"
+    }
+  ],
+
+  "products": [
+    {
+      "id": "product_1",
+      "referenceId": "",
+      "year": 2020,
+      "currency": "EUR",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
+    },
+    {
+      "id": "product_2",
+      "referenceId": "",
+      "year": 2021,
+      "currency": "USD",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
+    },
+    {
+      "id": "product_3",
+      "referenceId": "",
+      "year": 2019,
+      "currency": "DIR",
+      "price": 1000,
+      "description": "Lorem ipsum dolor sit amet",
+      "top_image": "",
+      "crown_side_image": "",
+      "case_back_image": "",
+      "show_of_image": "",
+      "conditionId": "",
+      "accompanyId": "",
+      "storeId": "store_id"
     }
   ]
 }

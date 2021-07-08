@@ -23,7 +23,7 @@ $skyblue: #369FF7;
 
 //-- custom scrollbar
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 5px;
   &-track {
     background: $gray1;
   }
@@ -35,6 +35,12 @@ $skyblue: #369FF7;
       opacity: 1;
     }
   }
+}
+
+// table
+table th {
+  color: white !important;
+  background: $lightbrown !important;
 }
 
 fieldset {
