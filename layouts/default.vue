@@ -76,6 +76,7 @@ export default {
           title: 'Dashboard',
           to: '/',
         },
+        /*
         {
           icon: 'mdi-clipboard-edit',
           title: 'Forms',
@@ -113,6 +114,10 @@ export default {
               to: '/form/clasps',
             },
             {
+              title: 'Collection Table',
+              to: '/form/collection',
+            },
+            {
               title: 'Condition form',
               to: '/form/Condition',
             },
@@ -136,15 +141,12 @@ export default {
               title: 'Product form',
               to: '/form/product',
             },
-            {
-              title: 'Reference form',
-              to: '/form/reference',
-            },
             
           ],
         },
+        
         {
-          icon: 'mdi-ballot',
+          icon: 'mdi-file-table',
           title: 'Table',
           subMenu: [
             {
@@ -180,6 +182,10 @@ export default {
               to: '/table/clasp',
             },
             {
+              title: 'Collection Table',
+              to: '/table/collections',
+            },
+            {
               title: 'Condition Table',
               to: '/table/Condition',
             },
@@ -192,8 +198,8 @@ export default {
               to: '/table/function',
             },
             {
-              title: 'Models Table',
-              to: '/table/model',
+              title: 'Model Table',
+              to: '/table/models',
             },
             {
               title: 'Movement Table',
@@ -203,18 +209,24 @@ export default {
               title: 'Product Table',
               to: '/table/product',
             },
-            {
-              title: 'Reference Table',
-              to: '/table/reference',
-            },
-            
           ],
         },
+        */
         {
-          icon: 'mdi-account-multiple',
-          title: 'User',
-          to: '/user',
+          icon: 'mdi-file-table',
+          title: 'Table',
+          to: '/table'
         },
+        {
+          icon: 'mdi-google-spreadsheet',
+          title: 'Seed CSV',
+          to: '/seed-csv',
+        },
+        // {
+        //   icon: 'mdi-account-multiple',
+        //   title: 'User',
+        //   to: '/user',
+        // },
       ],
       miniVariant: false,
       right: true,
@@ -226,6 +238,10 @@ export default {
 </script>
 
 <style scoped>
+.v-main {
+  background-color: #fafafa;
+}
+
 .v-list-item .v-list-item__title,
 .v-list-item .v-list-item__subtitle {
   font-size: 14px !important;
