@@ -1,9 +1,13 @@
 <template>
-  <v-row justify="center" align="center">
+  <v-col justify="center" align="center">
       <div class="mt-10 text-center">
         <h1>CMS DASHBOARD</h1>
       </div>
-  </v-row>
+      <br>
+      <br>
+      <logo />
+      <vuetify-logo />
+  </v-col>
 </template>
 
 <script>
@@ -17,3 +21,5 @@ export default {
   }
 }
 </script>
+
+    VuetifyLogo

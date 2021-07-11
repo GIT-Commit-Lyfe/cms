@@ -9,7 +9,7 @@
 
 $black: #0F1626;
 $lightbrown: #CFBA9B;
-$gray1: #F1F1F1;
+$gray1: #FAFAFA;
 $gray2: #F0F0F0;
 $gray3: #C4C4C4;
 $green: #009D06;
@@ -77,6 +77,26 @@ fieldset {
     background-color: transparent !important;
   }
 }
+
+// input 
+.v-text-field .v-label {
+  top: 10px !important;
+  &.--active {
+    top: 0 !important;
+  }
+}
+.v-select.v-text-field:not(.v-text-field--single-line) input {
+  margin-top: 10px !important;
+}
+.v-text-field .v-input__prepend-inner, .v-text-field .v-input__append-inner {
+  margin-top: 13px !important;
+}
+
+// select 
+// .v-select-list .v-list-item {
+//   font-size: 14px;
+//   min-height: 36px;
+// }
 
 @media (max-width: 780px) {
   .vue-form-generator {
