@@ -223,7 +223,12 @@ export default {
           to: '/seed-csv',
         },
         {
-          icon: 'mdi-google-spreadsheet',
+          icon: 'mdi-buffer',
+          title: 'Transaction',
+          to: '/transaction',
+        },
+        {
+          icon: 'mdi-account-multiple',
           title: 'User',
           to: '/user',
         },

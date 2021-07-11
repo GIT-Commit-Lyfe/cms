@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="text-center mt-5 mb-10">
-      <h2>User</h2>
+      <h2>Transaction</h2>
     </div>
 
     <!-- <v-layout class="d-flex" align-center>
@@ -16,14 +16,14 @@
       </v-col>
     </v-layout> -->
 
-    <User/>
+    <Transaction/>
   </v-container>
 </template>
 
 
 <script>
 import _ from 'lodash'
-import User from '@/components/crudUser/user'
+import Transaction from '@/components/crudTransaction/transaction'
 
 export default {
   data() {
@@ -34,7 +34,7 @@ export default {
   },
 
   components: {
-    User
+    Transaction
   },
 
   mounted() {

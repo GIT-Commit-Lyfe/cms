@@ -32,8 +32,11 @@
     <Movement v-if="tableType == 'Movement'" />
     <Product v-if="tableType == 'Product'" />
     <ProductStatus v-if="tableType == 'Product Status'" />
-    <Status v-if="tableType == 'status'" />
+    <Role v-if="tableType == 'Role'" />
     <Subscription v-if="tableType == 'Subscription'" />
+    <TransactionInfo v-if="tableType == 'Transaction Info'" />
+    <TransactionRating v-if="tableType == 'Transaction Rating'" />
+    <TransactionStatus v-if="tableType == 'Transaction Status'" />
     <UserStatus v-if="tableType == 'User Status'" />
     <WatchModel v-if="tableType == 'Watch Model'" />
     
@@ -59,8 +62,12 @@ import Function from '@/components/crudTable/function'
 import Movement from '@/components/crudTable/movement'
 import Product from '@/components/crudTable/product'
 import ProductStatus from '@/components/crudTable/productStatus'
+import Rating from '@/components/crudTable/rating'
 import Role from '@/components/crudTable/role'
 import Subscription from '@/components/crudTable/subscription'
+import TransactionInfo from '@/components/crudTable/transactionInfo'
+import TransactionRating from '@/components/crudTable/transactionRating'
+import TransactionStatus from '@/components/crudTable/transactionStatus'
 import UserStatus from '@/components/crudTable/userStatus'
 import WatchModel from '@/components/crudTable/watchModel'
 
@@ -84,8 +91,12 @@ export default {
         'Movement',
         'Product',
         'Product Status',
+        'Rating',
         'Role',
         'Subscription',
+        'Transaction Info',
+        'Transaction Rating',
+        'Transaction Status',
         'User Status',
         'Watch Model',
       ],
@@ -110,8 +121,13 @@ export default {
     Function,
     Movement,
     Product,
+    ProductStatus,
+    Rating,
     Role,
     Subscription,
+    TransactionInfo,
+    TransactionRating,
+    TransactionStatus,
     UserStatus,
     WatchModel,
   },
