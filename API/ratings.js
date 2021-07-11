@@ -1,12 +1,12 @@
 export default [
   {
-    id: '1_trans',
+    id: '1_rating',
     rating: '',
     comment: '',
     userId: '',
   },
   {
-    id: '2_trans',
+    id: '2_rating',
     rating: '',
     comment: '',
     userId: '',

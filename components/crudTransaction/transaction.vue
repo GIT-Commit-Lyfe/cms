@@ -109,6 +109,7 @@ export default {
     dialog: false,
     dialogDelete: false,
     statusOption: [],
+    currencyOption: [],
     buyerProductOption: [],
     sellerProductOption: [],
     headers: [

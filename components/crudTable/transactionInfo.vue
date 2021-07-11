@@ -90,7 +90,7 @@ export default {
       { text: 'Transaction ID', value: 'transactionId' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    items: TransactionRating,
+    items: TransactionInfo,
     editedIndex: -1,
     editedItem: {
       description: '',

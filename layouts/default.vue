@@ -213,7 +213,7 @@ export default {
         },
         */
         {
-          icon: 'mdi-file-table',
+          icon: 'mdi-file-table-box-multiple',
           title: 'Table',
           to: '/table'
         },

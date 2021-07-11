@@ -38,9 +38,19 @@ $skyblue: #369FF7;
 }
 
 // table
-table th {
-  color: white !important;
-  background: $lightbrown !important;
+table {
+  th {
+    color: white !important;
+    background: $lightbrown !important;
+  }
+  tr {
+    th, td {
+      padding: 0 10px !important;
+    }
+    td {
+      font-size: .75rem !important;
+    }
+  }
 }
 
 fieldset {

@@ -10,6 +10,7 @@
           v-model="tableType"
           :items="tableOptions"
           required
+          dense
           label="Chose table type"
           :rules="[(v) => !!v || 'Please select once']"
         ></v-autocomplete>
@@ -32,6 +33,7 @@
     <Movement v-if="tableType == 'Movement'" />
     <Product v-if="tableType == 'Product'" />
     <ProductStatus v-if="tableType == 'Product Status'" />
+    <Rating v-if="tableType == 'Rating'" />
     <Role v-if="tableType == 'Role'" />
     <Subscription v-if="tableType == 'Subscription'" />
     <TransactionInfo v-if="tableType == 'Transaction Info'" />
