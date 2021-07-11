@@ -222,6 +222,11 @@ export default {
           title: 'Seed CSV',
           to: '/seed-csv',
         },
+        {
+          icon: 'mdi-google-spreadsheet',
+          title: 'User',
+          to: '/user',
+        },
         // {
         //   icon: 'mdi-account-multiple',
         //   title: 'User',

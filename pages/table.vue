@@ -18,6 +18,7 @@
 
     <Accompany v-if="tableType == 'Accompany'" />
     <BezelMaterial v-if="tableType == 'Bezel Material'" />
+    <Boutique v-if="tableType == 'Boutique'" />
     <BraceletColor v-if="tableType == 'Bracelet Color'" />
     <BraceletMaterial v-if="tableType == 'Bracelet Material'" />
     <Brand v-if="tableType == 'Brand'" />
@@ -30,6 +31,10 @@
     <Function v-if="tableType == 'Function'" />
     <Movement v-if="tableType == 'Movement'" />
     <Product v-if="tableType == 'Product'" />
+    <ProductStatus v-if="tableType == 'Product Status'" />
+    <Status v-if="tableType == 'status'" />
+    <Subscription v-if="tableType == 'Subscription'" />
+    <UserStatus v-if="tableType == 'User Status'" />
     <WatchModel v-if="tableType == 'Watch Model'" />
     
   </v-container>
@@ -40,6 +45,7 @@
 import _ from 'lodash'
 import Accompany from '@/components/crudTable/accompany'
 import BezelMaterial from '@/components/crudTable/bezelMaterial'
+import Boutique from '@/components/crudTable/boutique'
 import BraceletColor from '@/components/crudTable/braceletColor'
 import BraceletMaterial from '@/components/crudTable/braceletMaterial'
 import Brand from '@/components/crudTable/brand'
@@ -52,6 +58,10 @@ import DialMaterial from '@/components/crudTable/dialMaterial'
 import Function from '@/components/crudTable/function'
 import Movement from '@/components/crudTable/movement'
 import Product from '@/components/crudTable/product'
+import ProductStatus from '@/components/crudTable/productStatus'
+import Role from '@/components/crudTable/role'
+import Subscription from '@/components/crudTable/subscription'
+import UserStatus from '@/components/crudTable/userStatus'
 import WatchModel from '@/components/crudTable/watchModel'
 
 export default {
@@ -60,6 +70,7 @@ export default {
       tableOptions: [
         'Accompany',
         'Bezel Material',
+        'Boutique',
         'Bracelet Color',
         'Bracelet Material',
         'Brand',
@@ -72,6 +83,10 @@ export default {
         'Function',
         'Movement',
         'Product',
+        'Product Status',
+        'Role',
+        'Subscription',
+        'User Status',
         'Watch Model',
       ],
       tableType: 'Brand',
@@ -82,6 +97,7 @@ export default {
   components: {
     Accompany,
     BezelMaterial,
+    Boutique,
     BraceletColor,
     BraceletMaterial,
     Brand,
@@ -94,6 +110,9 @@ export default {
     Function,
     Movement,
     Product,
+    Role,
+    Subscription,
+    UserStatus,
     WatchModel,
   },
 

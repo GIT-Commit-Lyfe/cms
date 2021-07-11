@@ -2,14 +2,14 @@
   <v-data-table :headers="headers" :items="items" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Product Table</v-toolbar-title>
+        <v-toolbar-title>User Table</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
 
         <v-dialog v-model="dialog" max-width="1000px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              Add Product
+              Add User
             </v-btn>
           </template>
           <v-card>
@@ -22,66 +22,79 @@
                 <v-row>
                   <v-col cols="12" md="3" sm="4">
                     <v-text-field
-                      v-model="editedItem.year"
-                      label="Year"
+                      v-model="editedItem.firstName"
+                      label="First Name"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" md="3" sm="4">
                     <v-text-field
-                      v-model="editedItem.price"
-                      label="Price"
+                      v-model="editedItem.middleName"
+                      label="Middle Name"
                     ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-autocomplete
-                      v-model="editedItem.currency"
-                      :items="currencyOption"
-                      label="Currency"
-                    ></v-autocomplete>
                   </v-col>
                   <v-col cols="12" md="3" sm="4">
                     <v-text-field
-                      v-model="editedItem.description"
-                      label="description At"
+                      v-model="editedItem.lastName"
+                      label="Last Name"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.email"
+                      label="Email"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.username"
+                      label="Username"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.password"
+                      label="Password"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.googleConnect"
+                      label="Google Connect"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.appleConnect"
+                      label="Apple Connect"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.facebookConnect"
+                      label="Facebook Connect"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.mobile"
+                      label="Mobile"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3" sm="4">
+                    <v-text-field
+                      v-model="editedItem.config"
+                      label="Mobile"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" md="3" sm="4">
                     <v-file-input
-                      v-model="editedItem.topImage"
+                      v-model="editedItem.picture"
                       show-size
                       counter
                       accept="image/png, image/jpeg, image/jpg"
-                      label="Top Image"
+                      label="Picture"
                     ></v-file-input>
                   </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-file-input
-                      v-model="editedItem.crownSideImage"
-                      show-size
-                      counter
-                      accept="image/png, image/jpeg, image/jpg"
-                      label="Crown Side Image"
-                    ></v-file-input>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-file-input
-                      v-model="editedItem.crownBackImage"
-                      show-size
-                      counter
-                      accept="image/png, image/jpeg, image/jpg"
-                      label="Crown Back Image"
-                    ></v-file-input>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-file-input
-                      v-model="editedItem.showOffImage"
-                      show-size
-                      counter
-                      accept="image/png, image/jpeg, image/jpg"
-                      label="Show Off Image"
-                    ></v-file-input>
-                  </v-col>
-                  
                 </v-row>
 
                 <v-divider class="mt-10 mb-5" horizontal></v-divider>
@@ -89,44 +102,23 @@
                 <v-row>
                   <v-col cols="12" md="3" sm="4">
                     <v-autocomplete
-                      v-model="editedItem.referenceId"
-                      :items="referenceOption"
-                      label="Reference ID"
+                      v-model="editedItem.roleId"
+                      label="Status"
+                      :items="roleOption"
                     ></v-autocomplete>
                   </v-col>
                   <v-col cols="12" md="3" sm="4">
                     <v-autocomplete
-                      v-model="editedItem.conditionId"
-                      :items="conditionOption"
-                      label="Condition ID"
+                      v-model="editedItem.subscriptionId"
+                      label="Status"
+                      :items="subscriptionOption"
                     ></v-autocomplete>
                   </v-col>
                   <v-col cols="12" md="3" sm="4">
                     <v-autocomplete
-                      v-model="editedItem.accompanyId"
-                      :items="accompanyOption"
-                      label="Accompany ID"
-                    ></v-autocomplete>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-autocomplete
-                      v-model="editedItem.boutiquelId"
-                      :items="boutiquelOption"
-                      label="Boutique ID"
-                    ></v-autocomplete>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-autocomplete
-                      v-model="editedItem.productStatuslId"
-                      :items="productStatuslOption"
-                      label="Product Status ID"
-                    ></v-autocomplete>
-                  </v-col>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-autocomplete
-                      v-model="editedItem.matchProductId"
-                      :items="matchProductOption"
-                      label="Match Product ID"
+                      v-model="editedItem.statusId"
+                      label="Status"
+                      :items="statusOption"
                     ></v-autocomplete>
                   </v-col>
                 </v-row>
@@ -141,7 +133,7 @@
           </v-card>
         </v-dialog>
 
-        <v-dialog v-model="dialogDelete" max-width="600px">
+        <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5 pt-10 pb-5"
               >Are you sure you want to delete this item?</v-card-title
@@ -172,83 +164,75 @@
 
 <script>
 import _ from 'lodash'
-import Product from '@/api/products'
-// import Condition from '@/api/conditions'
+import User from '@/api/users'
 
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    currencyOption: [],
-    referenceOption: [],
-    conditionOption: [],
-    accompanyOption: [],
-    boutiqueOption: [],
-    productStatusOption: [],
-    matchProductOption: [],
-
+    roleOption: [],
+    statusOption: [],
+    subscriptionOption: [],
     headers: [
       { text: 'ID', value: 'id' },
-      { text: 'Year', value: 'year' },
-      { text: 'Price', value: 'price' },
-      { text: 'Currency', value: 'currency' },
-      { text: 'Top Image', value: 'topImage' },
-      { text: 'Crown Side Image', value: 'crownSideImage' },
-      { text: 'Crown Back Image', value: 'crownBackImage' },
-      { text: 'Show Off Image', value: 'showOffImage' },
-      { text: 'Reference ID', value: 'referenceId' },
-      { text: 'Condition ID', value: 'conditionId' },
-      { text: 'Accompany ID', value: 'accompanyId' },
-      { text: 'Boutique ID', value: 'boutiqueId' },
-      { text: 'Product Status ID', value: 'productStatusId' },
-      { text: 'Match Product ID', value: 'matchProductId' },
+      { text: 'First Name', value: 'firstName' },
+      { text: 'Middle Name', value: 'middleName' },
+      { text: 'Last Name', value: 'lastName' },
+      { text: 'Email', value: 'email' },
+      { text: 'Username', value: 'username' },
+      { text: 'Password', value: 'password' },
+      { text: 'Google Connect', value: 'googleConnect' },
+      { text: 'Apple Connect', value: 'appleConnect' },
+      { text: 'Facebook Connect', value: 'facebookConnect' },
+      { text: 'Mobile', value: 'mobile' },
+      { text: 'Picture', value: 'picture' },
+      { text: 'Config', value: 'config' },
+      { text: 'Role ID', value: 'roleId' },
+      { text: 'Subscription ID', value: 'subscriptionId' },
+      { text: 'Status ID', value: 'statusId' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    items: Product,
+    items: User,
     editedIndex: -1,
     editedItem: {
-      year: '',
-      price: '',
-      currency: '',
-      description: '',
-      topImage: '',
-      crownSideImage: '',
-      crownBackImage: '',
-      showOffImage: '',
-      referenceId: '',
-      conditionId: '',
-      accompanyId: '',
-      boutiqueId: '',
-      productStatusId: '',
-      matchProductId: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      googleConnect: '',
+      appleConnect: '',
+      facebookConnect: '',
+      mobile: '',
+      picture: '',
+      config: '',
+      roleId: '',
+      subscriptionId: '',
+      statusId: '',
     },
     defaultItem: {
-      year: '',
-      price: '',
-      currency: '',
-      description: '',
-      topImage: '',
-      crownSideImage: '',
-      crownBackImage: '',
-      showOffImage: '',
-      referenceId: '',
-      conditionId: '',
-      accompanyId: '',
-      boutiqueId: '',
-      productStatusId: '',
-      matchProductId: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      googleConnect: '',
+      appleConnect: '',
+      facebookConnect: '',
+      mobile: '',
+      picture: '',
+      config: '',
+      roleId: '',
+      subscriptionId: '',
+      statusId: '',
     },
   }),
 
-  mounted() {
-    // Caliber.map((e) => {
-    //   this.caliberOption.push(`${e.id}`)
-    // })
-  },
-
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? `Add Product` : `Edit Product`
+      return this.editedIndex === -1 ? `Add User` : `Edit User`
     },
   },
 
