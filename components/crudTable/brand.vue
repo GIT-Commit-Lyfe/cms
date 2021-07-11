@@ -76,6 +76,8 @@ export default {
     headers: [
       { text: 'ID', value: 'id' },
       { text: 'Material Name', value: 'name' },
+      // { text: 'Created At', value: 'createdAt' },
+      // { text: 'Updated At', value: 'updatedAt' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     items: Brands,
