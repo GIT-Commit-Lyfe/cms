@@ -24,9 +24,11 @@ $skyblue: #369FF7;
 //-- custom scrollbar
 ::-webkit-scrollbar {
   width: 5px;
+
   &-track {
     background: $gray1;
   }
+
   &-thumb {
     opacity: .8;
     background: $lightbrown;
@@ -43,43 +45,26 @@ table {
     color: white !important;
     background: $lightbrown !important;
   }
+
   tr {
-    th, td {
+
+    th,
+    td {
       padding: 0 10px !important;
     }
+
     td {
       font-size: .75rem !important;
     }
   }
 }
 
-fieldset {
-  border: none;
+tbody tr:nth-of-type(even) {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
-.vue-form-generator {
-  fieldset {
-    display: flex;
-    padding: 0 5%;
-    flex-wrap: wrap;
-    .field-input, .field-select, .field-textArea, .field-image {
-      width: 50%;
-      padding: 0 3%;
-    }
-    .field-submit {
-      .field-wrap {
-        justify-content: center;
-        margin: 40px 0;
-      }
-      input {
-        background-color: $green !important;
-        border-color: $green !important;
-      }
-    }
-  }
-  .form-control {
-    padding: 8px 12px !important;
-  }
+fieldset {
+  border: none;
 }
 
 .v-application {
@@ -91,16 +76,20 @@ fieldset {
 // input 
 .v-text-field .v-label {
   top: 10px !important;
+
   &.--active {
     top: 0 !important;
   }
 }
-.v-select.v-text-field:not(.v-text-field--single-line) input {
-  margin-top: 10px !important;
-}
-.v-text-field .v-input__prepend-inner, .v-text-field .v-input__append-inner {
-  margin-top: 13px !important;
-}
+
+// .v-select.v-text-field:not(.v-text-field--single-line) input {
+//   margin-top: 10px !important;
+// }
+
+// .v-text-field .v-input__prepend-inner,
+// .v-text-field .v-input__append-inner {
+//   margin-top: 13px !important;
+// }
 
 // select 
 // .v-select-list .v-list-item {
@@ -108,23 +97,44 @@ fieldset {
 //   min-height: 36px;
 // }
 
-@media (max-width: 780px) {
-  .vue-form-generator {
-    fieldset {
-      .field-input, .field-select, .field-textArea, .field-image {
-        padding: 0 2%;
-      }
-    }
+// button
+.oauth {
+  opacity: 0.6;
+  border-color: rgba(0, 0, 0, 0.87) !important;
+
+  .v-btn__content {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  &:hover {
+    opacity: 1;
   }
 }
 
-@media (max-width: 480px) {
-  .vue-form-generator {
-    fieldset {
-      .field-input, .field-select, .field-textArea, .field-image {
-        width: 100%;
-        padding: 0;
-      }
-    }
+// divider
+.divider {
+  overflow: visible;
+  padding: 0;
+  margin-bottom: 10px;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  color: #6e6d7a;
+  text-align: center;
+
+  &:after {
+    content: 'Or';
+    display: inline-block;
+    position: relative;
+    top: -12px;
+    padding: 0 16px;
+    background: #fff;
   }
+}
+
+@media (max-width: 780px) {
+  
+}
+
+@media (max-width: 480px) {
+ 
 }
