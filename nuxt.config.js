@@ -37,8 +37,16 @@ export default {
     '~/assets/scss/main.scss',
   ],
 
+  ssr: false,
+  target: 'static',
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    {
+      src: '~/plugins/nuxt-client-init.client.js',
+      mode: 'client'
+    }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -55,12 +63,12 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
+    // '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'localhost:3000/api',
+    baseURL: 'http://34.89.181.74'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -92,33 +100,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  router: {
-    // middleware: ['auth']
-  },
-  
+  router: {},
+
   server: {
     // port: 8000
   },
 
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          property: 'token',
-          global: true,
-          // required: true,
-          // type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          // autoFetch: true
-        },
-        endpoints: {
-          login: { url: '/auth', method: 'post'},
-          logout: { url: '/auth', method: 'delete' },
-          user: { url: '/auth/user', method: 'get' },
-        }
-      }
-    }
-  }
 }
