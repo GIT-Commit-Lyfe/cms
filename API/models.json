@@ -1,0 +1,155 @@
+{
+  "Accompany": [{ "key": "name", "type": "string" }],
+  "BezelMaterial": [{ "key": "name", "type": "string" }],
+  "BraceletColor": [{ "key": "name", "type": "string" }],
+  "BraceletMaterial": [{ "key": "name", "type": "string" }],
+  "Brand": [{ "key": "name", "type": "string" }],
+  "ClaspMaterial": [{ "key": "name", "type": "string" }],
+  "Clasp": [{ "key": "name", "type": "string" }],
+  "Condition": [{ "key": "name", "type": "string" }],
+  "DialMaterial": [{ "key": "name", "type": "string" }],
+  "Function": [{ "key": "name", "type": "string" }],
+  "Movement": [{ "key": "name", "type": "string" }],
+
+  "Boutique": [
+    { "key": "name", "type": "string" },
+    { "key": "description", "type": "string" },
+    { "key": "address", "type": "string" },
+    { "key": "fullAddress", "type": "string" },
+    { "key": "avatar", "type": "string" },
+    { "key": "longitude", "type": "number" },
+    { "key": "latitude", "type": "number" },
+    { "key": "UserId", "type": "number" }
+  ],
+
+  "Caliber": [
+    { "key": "name", "type": "string" },
+    { "key": "BrandId", "type": "number" }
+  ],
+
+  "Collection": [
+    { "key": "name", "type": "string" },
+    { "key": "BrandId", "type": "number" }
+  ],
+  
+  "Product": [
+    { "key": "year", "type": "string" },
+    { "key": "price", "type": "number" },
+    { "key": "currency", "type": "string" },
+    { "key": "description", "type": "string" },
+    { "key": "topImage", "type": "string" },
+    { "key": "crownSideImage", "type": "string" },
+    { "key": "caseBackImage", "type": "string" },
+    { "key": "showOffImage", "type": "string" },
+    { "key": "WatchModelId", "type": "number" },
+    { "key": "ConditionId", "type": "number" },
+    { "key": "AccompanyId", "type": "number" },
+    { "key": "BoutiqueId", "type": "number" },
+    { "key": "ProductStatusId", "type": "number" },
+    { "key": "MatchProductId", "type": "number" }
+  ],
+
+  "ProductStatus": [{ 
+    "key": "name",
+    "type": "string",
+    "value": ["bid", "selling", "bidClosed", "sold", "archived", "deleted"]
+  }],
+
+  "Rating": [
+    { "key": "rating", "type": "number" },
+    { "key": "comment", "type": "string" },
+    { "key": "UserId", "type": "number" }
+  ],
+
+  "Role": [{ 
+    "key": "name",
+    "type": "string",
+    "value": ["user", "admin", "master"]
+  }],
+
+  "Subscription": [
+    { "key": "name", "type": "string" },
+    { 
+      "key": "value",
+      "type": "string", 
+      "value": ["IndividualInvestor", "ProfesionalTrader"]
+    }
+  ],
+
+  "Transaction": [
+    { "key": "price", "type": "number" },
+    { "key": "currency", "type": "string" },
+    { "key": "StatusId", "type": "number" },
+    { "key": "BuyerProductId", "type": "number" },
+    { "key": "SellerProductId", "type": "number" }
+  ],
+
+  "TransactionInfo": [
+    { "key": "description", "type": "string" },
+    { "key": "TransactionId", "type": "number" },
+    { "key": "StatusId", "type": "number" }
+  ],
+
+  "TransactionRating": [
+    { "key": "rating", "type": "number" },
+    { "key": "comment", "type": "string" },
+    { "key": "UserId", "type": "number" },
+    { "key": "TransactionId", "type": "number" }
+  ],
+
+  "TransactionStatus": [{ 
+    "key": "name",
+    "type": "string",
+    "value": ["done", "shipping", "verivication", "paid", "pending"]
+  }],
+
+  "UserStatus": [{ 
+    "key": "name",
+    "type": "string",
+    "value": ["pending", "verified", "blocked"]
+  }],
+
+  "User": [
+    { "key": "firstName", "type": "string" },
+    { "key": "middleName", "type": "string" },
+    { "key": "lastName", "type": "string" },
+    { "key": "email", "type": "string" },
+    { "key": "username", "type": "string" },
+    { "key": "password", "type": "string" },
+    { "key": "googleConnect", "type": "boolean" },
+    { "key": "appleConnect", "type": "boolean" },
+    { "key": "facebookConnect", "type": "boolean" },
+    { "key": "mobile", "type": "string" },
+    { "key": "picture", "type": "string" },
+    { "key": "config", "type": "string" },
+    { "key": "RoleId", "type": "number" },
+    { "key": "SubcriptionId", "type": "number" },
+    { "key": "StatusId", "type": "number" }
+  ],
+
+  "WatchModel": [
+    { "key": "referenceNumber", "type": "string" },
+    { "key": "caseMaterial", "type": "string" },
+    { "key": "caseDiameter", "type": "number" },
+    { "key": "caseThickness", "type": "number" },
+    { "key": "waterResistance", "type": "number" },
+    { "key": "glass", "type": "string" },
+    { "key": "streetName", "type": "string" },
+    { "key": "lugWidth", "type": "string" },
+    { "key": "introducedAt", "type": "string" },
+    { "key": "discontinuedAt", "type": "string" },
+    { "key": "powerReserved", "type": "number" },
+    { "key": "numberOfJewel", "type": "integer" },
+    { "key": "dialNumeral", "type": "string" },
+    { "key": "otherInfo", "type": "string" },
+    { "key": "CollectionId", "type": "number" },
+    { "key": "CaliberId", "type": "number" },
+    { "key": "MovementId", "type": "number" },
+    { "key": "BezelMaterialId", "type": "number" },
+    { "key": "BraceletMaterialId", "type": "number" },
+    { "key": "BraceletColorId", "type": "number" },
+    { "key": "ClaspId", "type": "number" },
+    { "key": "ClaspMaterialId", "type": "number" },
+    { "key": "FunctionId", "type": "number" }
+  ]
+}
