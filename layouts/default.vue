@@ -134,7 +134,7 @@ export default {
     }
   },
 
-  async updated() {
+  async created() {
     // console.log('from default,', this.token)
     try {
       await this.$store.dispatch('getUser', this.token)

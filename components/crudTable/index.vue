@@ -23,7 +23,7 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col v-for="(item, index) in mapping" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
+                  <v-col v-for="(item, index) in nonRelationModels" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
                     <v-text-field
                       v-model="editedItem[item.key]"
                       :label="fromCamelToLabel(item.key)"
@@ -34,12 +34,8 @@
                 <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
                 <v-row>
-                  <v-col cols="12" md="3" sm="4">
-                    <v-autocomplete
-                      v-model="editedItem.collectionId"
-                      :items="collectionOption"
-                      label="Collection ID"
-                    ></v-autocomplete>
+                  <v-col v-for="(model, index) in relationModels" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
+                    <OptionsId :model="model.key" @updateItem="updateItem" :modelId="editedItem[model.key]" />
                   </v-col>
                 </v-row>
               </v-container>
@@ -47,7 +43,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+              <v-btn color="blue darken-1" text @click="closeModal"> Cancel </v-btn>
               <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
             </v-card-actions>
           </v-card>
@@ -60,7 +56,7 @@
             >
             <v-card-actions class="pb-5">
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
+              <v-btn color="blue darken-1" text @click="closeModal"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
@@ -95,8 +91,12 @@
 import _ from 'lodash'
 import moment from "moment"
 import Caliber from '@/api/calibers'
+import OptionsId from "./optionsId"
 
 export default {
+  components: {
+    OptionsId,
+  },
   props: [
     "model",
     "mapping",
@@ -117,6 +117,8 @@ export default {
     claspMaterialOption: [],
     functionOption: [],
     items: [],
+    relationModels: [],
+    nonRelationModels: [],
     editedIndex: -1,
     editedItem: {},
   }),
@@ -126,6 +128,7 @@ export default {
       this.caliberOption.push(`${e.id}`)
     })
     this.fetchData();
+    this.seperateModels();
   },
 
   computed: {
@@ -203,6 +206,7 @@ export default {
     },
     "model.name": function (val) {
       this.fetchData();
+      this.seperateModels();
     }
   },
 
@@ -219,6 +223,15 @@ export default {
       this.tableLoading = false;
     },
 
+    // event handlers
+    updateItem({ model, payload }) {
+      this.editedItem[model] = payload;
+    },
+
+    seperateModels() {
+      this.relationModels = this.mapping.filter((item) => item.key.includes("Id"));
+      this.nonRelationModels = this.mapping.filter((item) => !item.key.includes("Id"));
+    },
     toggleId() {
       this.showId = !this.showId;
     },
@@ -273,6 +286,11 @@ export default {
       })
     },
 
+    closeModal() {
+      this.close();
+      this.closeDelete();
+      this.editedIndex = -1;
+    },
     save() {
       this.tableLoading = true;
       if (this.editedIndex > -1) {
