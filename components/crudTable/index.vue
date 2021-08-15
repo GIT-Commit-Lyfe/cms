@@ -88,7 +88,6 @@
 <script>
 import _ from 'lodash'
 import moment from "moment"
-import WatchModel from '@/api/watchModels'
 import Caliber from '@/api/calibers'
 
 export default {
