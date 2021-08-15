@@ -11,13 +11,14 @@
           :items="tableOptions"
           required
           dense
-          label="Chose table type"
+          label="Choose table type"
           :rules="[(v) => !!v || 'Please select once']"
         ></v-autocomplete>
       </v-col>
     </v-layout>
 
-    <Accompany v-if="tableType == 'Accompany'" />
+    <Table :model="selectedModel" :mapping="models[selectedModel.name]" />
+    <!-- <Accompany v-if="tableType == 'Accompany'" />
     <BezelMaterial v-if="tableType == 'Bezel Material'" />
     <Boutique v-if="tableType == 'Boutique'" />
     <BraceletColor v-if="tableType == 'Bracelet Color'" />
@@ -40,7 +41,7 @@
     <TransactionRating v-if="tableType == 'Transaction Rating'" />
     <TransactionStatus v-if="tableType == 'Transaction Status'" />
     <UserStatus v-if="tableType == 'User Status'" />
-    <WatchModel v-if="tableType == 'Watch Model'" />
+    <WatchModel v-if="tableType == 'Watch Model'" /> -->
     
   </v-container>
 </template>
@@ -72,6 +73,9 @@ import TransactionRating from '@/components/crudTable/transactionRating'
 import TransactionStatus from '@/components/crudTable/transactionStatus'
 import UserStatus from '@/components/crudTable/userStatus'
 import WatchModel from '@/components/crudTable/watchModel'
+import Table from '@/components/crudTable'
+
+import models from "@/API/models.json";
 
 export default {
   data() {
@@ -103,11 +107,13 @@ export default {
         'Watch Model',
       ],
       tableType: 'Brand',
+      models,
       // tableValue: [],
     }
   },
 
   components: {
+    Table,
     Accompany,
     BezelMaterial,
     Boutique,
@@ -134,6 +140,21 @@ export default {
     WatchModel,
   },
 
+  computed: {
+    modelOptions() {
+      return this.tableOptions.map((item) => {
+        return {
+          name: item.replace(" ", ""),
+          label: item,
+        }
+      })
+    },
+    selectedModel() {
+      return this.modelOptions.find((item) => {
+        return item.label === this.tableType;
+      }) || {}
+    }
+  },
   mounted() {
     // this.tableOptions = Object.keys(RealTable)
     // this.parseSelect()
