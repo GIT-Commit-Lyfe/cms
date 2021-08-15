@@ -4,6 +4,9 @@
       <v-toolbar flat>
         <v-toolbar-title>{{ model.label }} Table</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
+        <v-btn color="primary" dark plain @click="toggleId">
+          {{ showId ? "Hide ID" : "Show ID" }}
+        </v-btn>
         <v-spacer></v-spacer>
 
         <v-dialog v-model="dialog" max-width="1000px">
@@ -20,7 +23,7 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col v-for="(item, index) in mapping" :key="index" cols="12" md="3" sm="4">
+                  <v-col v-for="(item, index) in mapping" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
                     <v-text-field
                       v-model="editedItem[item.key]"
                       :label="fromCamelToLabel(item.key)"
@@ -69,6 +72,9 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:[`item.no`]="{ index }">
+      {{ index + 1 }}
+    </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ toDate(item.createdAt) }}
     </template>
@@ -97,6 +103,7 @@ export default {
   ],
   data: () => ({
     tableLoading: false,
+    showId: false,
     dialog: false,
     dialogDelete: false,
     collectionOption: [],
@@ -126,11 +133,18 @@ export default {
       return this.editedIndex === -1 ? `Add ${this.model.label}` : `Edit ${this.model.label}`
     },
     headers() {
+      const idObj = {
+        key: "id",
+        type: "string",
+      }
+      const idColumn = this.showId ? [idObj] : []
+
       const completedMapping = [
         {
-          key: "id",
-          type: "string",
+          key: "no",
+          type: "number",
         },
+        ...idColumn,
         ...this.mapping,
         {
           key: "createdAt",
@@ -205,6 +219,9 @@ export default {
       this.tableLoading = false;
     },
 
+    toggleId() {
+      this.showId = !this.showId;
+    },
     toDate(item) {
       return moment(item).fromNow();
     },
