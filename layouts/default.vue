@@ -134,9 +134,16 @@ export default {
     }
   },
 
-  created() {
+  async updated() {
     // console.log('from default,', this.token)
-    this.$store.dispatch('getUser', this.token)
+    try {
+      await this.$store.dispatch('getUser', this.token)
+    } catch (err) {
+      commit('SET_AUTH', false)
+      commit('SET_USER', {})
+      commit('SET_TOKEN', null)
+      this.$router.replace('/login')
+    }
   },
 
   computed: {

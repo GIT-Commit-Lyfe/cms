@@ -30,8 +30,16 @@ export const actions = {
   async nuxtClientInit({ commit, dispatch }) {
     const token = ls.get("cms:token");
     if (token) {
-      await dispatch('getUser', token)
-      commit('SET_AUTH', true)
+      try {
+        await dispatch('getUser', token)
+        commit('SET_AUTH', true)
+      } catch (err) {
+        ls.removeAll()
+        commit('SET_AUTH', false)
+        commit('SET_USER', {})
+        commit('SET_TOKEN', null)
+        this.$router.replace('/login')
+      }
     }
   },
 
