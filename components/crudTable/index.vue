@@ -126,7 +126,10 @@ export default {
         key: "id",
         type: "string",
       }
-      const idColumn = this.showId ? [idObj] : []
+      const idHeaders = _.filter(this.mapping, (item) => /Id/.test(item.key));
+      const idPopulatedHeaders = _.map(idHeaders, (item) => ({ key: item.key.replace(/Id/, ""), type: "string" }))
+      const nonIdHeaders = _.filter(this.mapping, (item) => !/Id/.test(item.key));
+      const idColumn = this.showId ? [idObj, ...idHeaders] : []
 
       const completedMapping = [
         {
@@ -134,7 +137,8 @@ export default {
           type: "number",
         },
         ...idColumn,
-        ...this.mapping,
+        ...idPopulatedHeaders,
+        ...nonIdHeaders,
         {
           key: "createdAt",
           type: "date",
