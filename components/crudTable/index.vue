@@ -43,8 +43,8 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeModal"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="closeModal"> Cancel </v-btn>
+              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="save"> Save </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -56,10 +56,10 @@
             >
             <v-card-actions class="pb-5">
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeModal"
+              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="closeModal"
                 >Cancel</v-btn
               >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="deleteItemConfirm"
                 >OK</v-btn
               >
               <v-spacer></v-spacer>
@@ -229,6 +229,9 @@ export default {
       return result.charAt(0).toUpperCase() + result.slice(1);
     },
     editItem(item) {
+      if (this.tableLoading) {
+        return;
+      }
       this.editedIndex = this.items.indexOf(item);
       const defaultKeys = Object.keys(this.defaultItem);
       this.editedItem = _.pick(item, defaultKeys);
@@ -236,6 +239,9 @@ export default {
     },
 
     deleteItem(item) {
+      if (this.tableLoading) {
+        return;
+      }
       this.editedIndex = this.items.indexOf(item)
       const defaultKeys = Object.keys(this.defaultItem);
       this.editedItem = _.pick(item, defaultKeys);
