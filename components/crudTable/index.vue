@@ -90,7 +90,6 @@
 <script>
 import _ from 'lodash'
 import moment from "moment"
-import Caliber from '@/api/calibers'
 import OptionsId from "./optionsId"
 
 export default {
@@ -106,16 +105,6 @@ export default {
     showId: false,
     dialog: false,
     dialogDelete: false,
-    collectionOption: [],
-    caliberOption: [],
-    movementOption: [],
-    bezelMaterialOption: [],
-    dialMaterialOption: [],
-    braceletMaterialOption: [],
-    braceletColorOption: [],
-    claspOption: [],
-    claspMaterialOption: [],
-    functionOption: [],
     items: [],
     relationModels: [],
     nonRelationModels: [],
@@ -124,9 +113,6 @@ export default {
   }),
 
   mounted() {
-    Caliber.map((e) => {
-      this.caliberOption.push(`${e.id}`)
-    })
     this.fetchData();
     this.seperateModels();
   },
