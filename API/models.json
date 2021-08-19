@@ -8,7 +8,7 @@
   "Clasp": [{ "key": "name", "type": "string" }],
   "Condition": [{ "key": "name", "type": "string" }],
   "DialMaterial": [{ "key": "name", "type": "string" }],
-  "Function": [{ "key": "name", "type": "string" }],
+  "WatchFunction": [{ "key": "name", "type": "string" }],
   "Movement": [{ "key": "name", "type": "string" }],
 
   "Boutique": [
@@ -150,6 +150,6 @@
     { "key": "BraceletColorId", "type": "number" },
     { "key": "ClaspId", "type": "number" },
     { "key": "ClaspMaterialId", "type": "number" },
-    { "key": "FunctionId", "type": "number" }
+    { "key": "WatchFunctionId", "type": "number" }
   ]
 }
