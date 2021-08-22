@@ -129,6 +129,7 @@
 
   "WatchModel": [
     { "key": "referenceNumber", "type": "string" },
+    { "key": "modelImage", "type": "file" },
     { "key": "caseMaterial", "type": "string" },
     { "key": "caseDiameter", "type": "number" },
     { "key": "caseThickness", "type": "number" },
