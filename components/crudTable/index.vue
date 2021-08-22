@@ -23,7 +23,7 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col v-for="(item, index) in nonRelationModels" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
+                  <v-col v-for="(item, index) in nonRelationModels" :key="index" cols="12" :md="nonRelationModels.length < 4 ? 12 / nonRelationModels.length : 3" :sm="nonRelationModels.length < 3 ? 12 / nonRelationModels.length : 4">
                     <v-text-field
                       v-model="editedItem[item.key]"
                       :label="fromCamelToLabel(item.key)"
@@ -34,8 +34,35 @@
                 <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
                 <v-row>
-                  <v-col v-for="(model, index) in relationModels" :key="index" cols="12" :md="mapping.length < 4 ? 12 / mapping.length : 3" :sm="mapping.length < 3 ? 12 / mapping.length : 4">
+                  <v-col v-for="(model, index) in relationModels" :key="index" cols="12" :md="relationModels.length < 4 ? 12 / relationModels.length : 3" :sm="relationModels.length < 3 ? 12 / relationModels.length : 4">
                     <OptionsId :model="model.key" @updateItem="updateItem" :modelId="editedItem[model.key]" />
+                  </v-col>
+                </v-row>
+
+                <v-divider class="mt-10 mb-5" horizontal></v-divider>
+
+                <v-row>
+                  <v-col v-for="(model, index) in fileModels" :key="index" cols="12" :md="fileModels.length < 4 ? 12 / fileModels.length : 3" :sm="fileModels.length < 3 ? 12 / fileModels.length : 4">
+                    <h3 class="mb-3">{{fromCamelToLabel(model.key)}}</h3>
+                    <v-progress-circular
+                      v-if="uploadingImage[model.key]"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
+                    <v-img
+                      v-if="editedItem[model.key]"
+                      :src="editedItem[model.key]"
+                      max-width="20%"
+                      contain
+                    ></v-img>
+                    <v-btn v-if="editedItem[model.key]" color="blue darken-1" text @click="updateImage(model.key)"> Update Image </v-btn>
+                    <input
+                      v-if="!editedItem[model.key]"
+                      type="file"
+                      id="upload"
+                      ref="inputFile"
+                      @change="handleFileChange($event, model.key)"
+                    />
                   </v-col>
                 </v-row>
               </v-container>
@@ -109,6 +136,8 @@ export default {
     items: [],
     relationModels: [],
     nonRelationModels: [],
+    fileModels: [],
+    uploadingImage: {},
     editedIndex: -1,
     editedItem: {},
   }),
@@ -221,9 +250,30 @@ export default {
     pagination(payload) {
       this.paginationInfo = payload;
     },
+    async handleFileChange(event, key) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        this.uploadingImage[key] = true;
+        this.$forceUpdate();
+        const { data } = await this.$axios.post('/api/upload', formData);
+        this.uploadingImage[key] = false;
+        this.editedItem[key] = data.publicURL;
+        this.$forceUpdate();
+      } catch (err) {
+        alert(err.message);
+      }
+    },
+    updateImage(key) {
+      this.editedItem[key] = "";
+      this.$forceUpdate();
+    },
+
     seperateModels() {
       this.relationModels = this.mapping.filter((item) => item.key.includes("Id"));
-      this.nonRelationModels = this.mapping.filter((item) => !item.key.includes("Id"));
+      this.nonRelationModels = this.mapping.filter((item) => !item.key.includes("Id") && item.type !== "file");
+      this.fileModels = this.mapping.filter((item) => item.type === "file");
     },
     toggleId() {
       this.showId = !this.showId;
