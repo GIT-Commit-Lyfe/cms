@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :loading="tableLoading" :headers="headers" :items="items" class="elevation-1">
+  <v-data-table @pagination="pagination" :loading="tableLoading" :headers="headers" :items="items" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ model.label }} Table</v-toolbar-title>
@@ -68,8 +68,8 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:[`item.no`]="{ index }">
-      {{ index + 1 }}
+    <template v-slot:[`item.no`]="options">
+      {{ options.index + 1 + (paginationInfo.page - 1)*paginationInfo.itemsPerPage}}
     </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ toDate(item.createdAt) }}
@@ -101,6 +101,7 @@ export default {
     "mapping",
   ],
   data: () => ({
+    paginationInfo: {},
     tableLoading: false,
     showId: false,
     dialog: false,
@@ -217,7 +218,9 @@ export default {
     updateItem({ model, payload }) {
       this.editedItem[model] = payload;
     },
-
+    pagination(payload) {
+      this.paginationInfo = payload;
+    },
     seperateModels() {
       this.relationModels = this.mapping.filter((item) => item.key.includes("Id"));
       this.nonRelationModels = this.mapping.filter((item) => !item.key.includes("Id"));
