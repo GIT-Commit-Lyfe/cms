@@ -8,10 +8,10 @@
       <v-row align="center" class="my-5">
         <v-col cols="12" md="5">
           <v-autocomplete
-            v-model="csvType"
-            :items="options"
+            v-model="modelSelected"
+            :items="modelOptions"
             required
-            label="Type csv"
+            label="Select type of csv"
             @change="parseSelect"
             :rules="[(v) => !!v || 'Please select once']"
           ></v-autocomplete>
@@ -20,13 +20,13 @@
 
         <v-col cols="12" md="5">
           <label for="upload-csv">
-            <p>input csv</p>
+            <p>Upload csv file</p>
             <input
               type="file"
               id="upload-csv"
               accept=".csv"
               ref="inputCsv"
-              :disabled="btnInputFile"
+              :disabled="btnInputCSV"
               @change="parseFile"
             />
           </label>
@@ -35,6 +35,7 @@
 
       <v-row v-if="noteSuccess" class="text-center note-wrap px-4 py-10">
         <h3 class="notes">Good, your data is valid!</h3>
+        <!-- <SnackBar :message="'Good, your data is valid!'" /> -->
       </v-row>
 
       <v-row class="my-10 ml-2">
@@ -42,7 +43,7 @@
           :disabled="btnSubmit"
           color="success"
           class="mr-4"
-          @click="submit"
+          @click="fileSubmit"
         >
           Submit
         </v-btn>
@@ -50,22 +51,22 @@
       </v-row>
     </v-form>
 
-    <v-col v-if="csvType" class="px-0">
-      <h4 class="mt-10">Suggest Table</h4>
+    <v-col v-if="modelSelected" class="px-0">
+      <h4 class="mt-10">Valid Model</h4>
       <v-data-table
-        :headers="suggestValue.headers"
-        :items="suggestValue.items"
+        :headers="modelValid.headers"
+        :items="modelValid.items"
         class="mb-10 mt-2"
         hide-default-footer
       ></v-data-table>
     </v-col>
 
-    <v-col v-if="csvFile" class="px-0">
-      <h4 class="mt-10">Real Table</h4>
+    <v-col v-if="fileSelected" class="px-0">
+      <h4 class="mt-10">Current Model</h4>
       <v-data-table
-        :headers="realValue.headers"
-        :items="realValue.items"
-        :items-per-page="5"
+        :headers="fileCurrent.headers"
+        :items="fileCurrent.items"
+        :items-per-page="10"
         class="elevation-1 mb-10 mt-2"
       ></v-data-table>
     </v-col>
@@ -75,75 +76,98 @@
 <script>
 import Papa from 'papaparse'
 import _ from 'lodash'
-import SuggestTable from '@/api/suggestTable'
+// import SnackBar from '@/components/alert/snackBar'
+import Models from '@/api/models.json'
+// import { mapActions } from 'vuex'
 
 export default {
+  props: ['message'],
   data() {
     return {
       valid: true,
       btnSubmit: true,
-      btnInputFile: true,
+      btnInputCSV: true,
       noteSuccess: false,
 
-      options: [],
-      csvType: null,
-      csvFile: null,
-
-      keysCsvType: [],
-
-      suggestValue: {},
-      realValue: {
-        headers: [
-          { text: 'ID', value: 'id' },
-          { text: 'Brand Name', value: 'brandName' },
-        ],
-        items: [],
-      },
+      modelOptions: [],
+      modelSelected: '',
+      modelValid: {},
+      modelArrayValid: [],
+      
+      fileInput: null,
+      fileSelected: false,
+      fileCurrent: {},
     }
   },
 
-  computed: {},
+  components: {
+    // SnackBar
+  },
+
+  mounted() {
+    this.modelOptions = Object.keys(Models)
+  },
 
   methods: {
-    submit () {
-      console.log('succsess')
+    async fileSubmit() {
+      try {
+        let formData = new FormData()
+        formData.append('file', this.fileInput)
+        await this.$axios.post(`/api/seed`, formData);
+      } catch (err) {
+        console.log(err);
+      }
     },
+
     reset() {
       this.$refs.form.reset()
       this.$refs.inputCsv.value = ''
-      this.realValue = []
-      this.csvFile = false
       this.noteSuccess = false
       this.btnSubmit = true
+      this.btnInputCSV = true
+
+      this.btnSubmit = true,
+      this.btnInputCSV = true,
+      this.noteSuccess = false,
+
+      this.modelArrayValid = [],
+      this.file = null,
+      this.fileSelected = false,
+      this.fileCurrent = {}
     },
 
     parseFile(data) {
-      var reader = new FileReader()
+      let fileName = (data.target.files[0].name).slice(0, -4)
+      let modelSelect = this.modelSelected
 
-      reader.readAsText(data.target.files[0])
-      reader.onload = (e) => {
-        const dataEmpty = e.target.result == ''
+      if(fileName != modelSelect) {
+        alert('File name is different, file name must capitalize each word and with no space \nSample: \nBrand.csv \nBezelMaterial.csv')
+      } else {
+        var reader = new FileReader()
 
-        Papa.parse(e.target.result, {
-          header: true,
-          complete: ({ data }) => {
-            const dataIsEmpty = data.length <= 1
+        reader.readAsText(data.target.files[0])
+        reader.onload = (e) => {
+          Papa.parse(e.target.result, {
+            header: true,
 
-            if (dataIsEmpty) {
-              alert('Data not found, please check and update')
-            } else {
-              let keyFiles = Object.keys(data[0])
-              let keyType = Object.keys(SuggestTable[this.csvType][0])
+            complete: ({ data }) => {
 
-              if (_.isEqual(keyType, keyFiles)) {
-                this.realValue = this.objectToTable(data)
-                this.csvFile = true
-                this.noteSuccess = true
-                this.btnSubmit = false
+              if ( data.length <= 1 ) {
+                alert('Data not found, please check and update')
+              } else {
+                let keyFiles = Object.keys(data[0]),
+                    keyValid = this.modelArrayValid
+
+                if (_.isEqual(keyFiles, keyValid)) {
+                  this.fileCurrent = this.objectToTable(data)
+                  this.fileSelected = true
+                  this.btnSubmit = false
+                  this.fileInput = data.target.files[0];
+                }
               }
-            }
-          },
-        })
+            },
+          })
+        }
       }
     },
 
@@ -167,18 +191,26 @@ export default {
     },
 
     parseSelect() {
-      let data = SuggestTable[this.csvType]
-      this.suggestValue = this.objectToTable(data)
-      if(this.csvType) {
-        this.btnInputFile = false
-      }
-    },
-  },
+      let tempHeader = [],
+          tempArray = [],
+          data = Models[this.modelSelected]
 
-  mounted() {
-    this.options = Object.keys(SuggestTable)
-    if(this.csvType) {
-      this.btnInputFile = false
+      data.map((e) => {
+        tempHeader.push({ text: this.cts(e.key), value: e.key })
+        tempArray.push(e.key)
+      })
+
+      this.btnInputCSV = false
+      this.modelValid.headers = tempHeader
+      this.modelArrayValid = tempArray
+    },
+
+    // camel case to sentence
+    cts(str) {
+      let result = str.replace(/([A-Z])/g,' $1')
+      let final = String(result.charAt(0).toUpperCase()+result.slice(1))
+
+      return final
     }
   },
 }
@@ -186,7 +218,9 @@ export default {
 
 
 <style scoped>
-
+input#upload-csv[disabled] {
+  color: silver;
+}
 .note-wrap .notes {
   width: fit-content;
   color: green;
