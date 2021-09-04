@@ -77,7 +77,7 @@
 import Papa from 'papaparse'
 import _ from 'lodash'
 // import SnackBar from '@/components/alert/snackBar'
-import Models from '@/api/models.json'
+import Models from '@/API/models.json'
 // import { mapActions } from 'vuex'
 
 export default {
@@ -113,7 +113,8 @@ export default {
       try {
         let formData = new FormData()
         formData.append('file', this.fileInput)
-        await this.$axios.post(`/api/seed`, formData);
+        await this.$axios.post(`/api/seed/${this.modelSelected}`, formData);
+        this.reset();
       } catch (err) {
         console.log(err);
       }
@@ -121,48 +122,63 @@ export default {
 
     reset() {
       this.$refs.form.reset()
+      this.btnInputCSV = true
+      this.$refs.inputCsv.value = ''
+      this.modelArrayValid = []
+      this.modelValid = {}
+
+      this.resetData()
+    },
+
+    resetData() {
       this.$refs.inputCsv.value = ''
       this.noteSuccess = false
       this.btnSubmit = true
-      this.btnInputCSV = true
 
-      this.btnSubmit = true,
-      this.btnInputCSV = true,
-      this.noteSuccess = false,
-
-      this.modelArrayValid = [],
-      this.file = null,
-      this.fileSelected = false,
+      this.fileInput = null
+      this.fileSelected = false
       this.fileCurrent = {}
     },
-
-    parseFile(data) {
-      let fileName = (data.target.files[0].name).slice(0, -4)
+    
+    parseFile(event) {
+      if (!event.target.files.length) {
+        this.resetData();
+        return;
+      }
+      const fileNameExtension = event.target.files[0].name
+      if (!fileNameExtension.includes("csv")) {
+        alert('File must be csv format')
+        this.resetData();
+        return;
+      }
+      let fileName = fileNameExtension.replace(".csv", "")
       let modelSelect = this.modelSelected
 
       if(fileName != modelSelect) {
         alert('File name is different, file name must capitalize each word and with no space \nSample: \nBrand.csv \nBezelMaterial.csv')
+        this.resetData()
       } else {
         var reader = new FileReader()
 
-        reader.readAsText(data.target.files[0])
+        reader.readAsText(event.target.files[0])
         reader.onload = (e) => {
           Papa.parse(e.target.result, {
             header: true,
 
             complete: ({ data }) => {
-
               if ( data.length <= 1 ) {
                 alert('Data not found, please check and update')
+                this.resetData()
               } else {
                 let keyFiles = Object.keys(data[0]),
                     keyValid = this.modelArrayValid
 
                 if (_.isEqual(keyFiles, keyValid)) {
+                  this.noteSuccess = true
                   this.fileCurrent = this.objectToTable(data)
                   this.fileSelected = true
                   this.btnSubmit = false
-                  this.fileInput = data.target.files[0];
+                  this.fileInput = event.target.files[0];
                 }
               }
             },
@@ -196,22 +212,15 @@ export default {
           data = Models[this.modelSelected]
 
       data.map((e) => {
-        tempHeader.push({ text: this.cts(e.key), value: e.key })
+        tempHeader.push({ text: e.key, value: e.key })
         tempArray.push(e.key)
       })
 
       this.btnInputCSV = false
       this.modelValid.headers = tempHeader
       this.modelArrayValid = tempArray
+      this.resetData()
     },
-
-    // camel case to sentence
-    cts(str) {
-      let result = str.replace(/([A-Z])/g,' $1')
-      let final = String(result.charAt(0).toUpperCase()+result.slice(1))
-
-      return final
-    }
   },
 }
 </script>
