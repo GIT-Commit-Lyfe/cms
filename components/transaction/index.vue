@@ -1,21 +1,37 @@
 <template>
-  <v-data-table :headers="headers" :items="items" class="elevation-1">
+  <v-data-table @pagination="pagination" :headers="headers" :items="items" :loading="tableLoading" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Transaction Table</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
+        <v-btn color="primary" dark plain @click="toggleId">
+          {{ showId ? "Hide ID" : "Show ID" }}
+        </v-btn>
         <v-spacer></v-spacer>
 
-        <v-dialog v-model="dialog" max-width="1000px">
-          <template v-slot:activator="{ on, attrs }">
+        <v-dialog v-model="dialog" max-width="95vw">
+          <!-- <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               Add Transaction
             </v-btn>
-          </template>
-          <v-card>
+          </template> -->
+
+          <v-card class="px-10">
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
+
+            <v-row>
+              <v-col cols="12" md="8" class="px-3">
+                <BuyerSeller />
+              </v-col>
+
+              <v-col cols="12" md="4" class="px-3">
+                <Stepper />
+              </v-col>
+            </v-row>
+
+            <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
             <v-card-text>
               <v-container>
@@ -90,6 +106,16 @@
         </v-dialog>
       </v-toolbar>
     </template>
+
+    <template v-slot:[`item.no`]="options">
+      {{ options.index + 1 + (paginationInfo.page - 1)*paginationInfo.itemsPerPage}}
+    </template>
+    <template v-slot:[`item.createdAt`]="{ item }">
+      {{ toDate(item.createdAt) }}
+    </template>
+    <template v-slot:[`item.updatedAt`]="{ item }">
+      {{ toDate(item.updatedAt) }}
+    </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
@@ -102,46 +128,88 @@
 
 <script>
 import _ from 'lodash'
-import Transaction from '@/api/transactions'
+import moment from 'moment'
+import models from '@/API/models'
+import OptionsId from './optionsId'
+import Stepper from './stepper'
+import BuyerSeller from './buyerSeller'
 
 export default {
   data: () => ({
+    model: 'Transaction',
+    showId: false,
     dialog: false,
     dialogDelete: false,
     statusOption: [],
     currencyOption: [],
     buyerProductOption: [],
     sellerProductOption: [],
-    headers: [
-      { text: 'ID', value: 'id' },
-      { text: 'Price', value: 'price' },
-      { text: 'Currency', value: 'currency' },
-      { text: 'Status ID', value: 'statusId' },
-      { text: 'Buyer Product ID', value: 'buyerProductId' },
-      { text: 'Seller Product ID', value: 'sellerProductId' },
-      { text: 'Actions', value: 'actions', sortable: false },
-    ],
-    items: Transaction,
+    items: [],
     editedIndex: -1,
-    editedItem: {
-      price: '',
-      currency: '',
-      statusId: '',
-      buyerProductId: '',
-      sellerProductId: '',
-    },
-    defaultItem: {
-      price: '',
-      currency: '',
-      statusId: '',
-      buyerProductId: '',
-      sellerProductId: '',
-    },
+    editedItem: {},
+    defaultItem: {},
+    paginationInfo: {},
+    tableLoading: false
   }),
+
+  mounted() {
+    this.fetchTransaction()
+  },
+
+  components: {
+    OptionsId,
+    Stepper,
+    BuyerSeller
+  },
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? `Add Transaction` : `Edit Transaction`
+    },
+    headers() {
+      const idObj = {
+        key: "id",
+        type: "string",
+      }
+      const idHeaders = _.filter(this.mapping, (item) => /Id/.test(item.key));
+      const idPopulatedHeaders = _.map(idHeaders, (item) => ({ key: item.key.replace(/Id/, ""), type: "string" }))
+      const nonIdHeaders = _.filter(this.mapping, (item) => !/Id/.test(item.key));
+      const idColumn = this.showId ? [idObj, ...idHeaders] : []
+
+      const completedMapping = [
+        {
+          key: "no",
+          type: "number",
+        },
+        ...idColumn,
+        ...idPopulatedHeaders,
+        ...nonIdHeaders,
+        {
+          key: "createdAt",
+          type: "date",
+        },
+        {
+          key: "updatedAt",
+          type: "date",
+        },
+        { 
+          text: 'actions',
+          type: 'actions',
+        },
+      ]
+      return completedMapping.map((item) => {
+        if (item.type === "actions") {
+          return {
+            text: 'Actions',
+            value: 'actions',
+            sortable: false,
+          };
+        }
+        return {
+          text: this.fromCamelToLabel(item.key),
+          value: item.key,
+        }
+      })
     },
   },
 
@@ -152,10 +220,46 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete()
     },
+    "model.name": function (val) {
+      this.fetchTransaction();
+      // this.seperateModels();
+    }
   },
 
   methods: {
+    async fetchTransaction() {
+      try {
+        this.tableLoading = true;
+        const { data } = await this.$axios.get(`/api/cms/Transaction`);
+        this.items = _.cloneDeep(data);
+
+      } catch (err) {
+        console.log(err);
+      }
+      this.tableLoading = false;
+    },
+    
+    pagination(payload) {
+      this.paginationInfo = payload;
+    },
+
+    toDate(item) {
+      return moment(item).fromNow();
+    },
+    
+    toggleId() {
+      this.showId = !this.showId;
+    },
+
+    fromCamelToLabel(text) {
+      const result = text.replace(/([A-Z])/g, " $1");
+      return result.charAt(0).toUpperCase() + result.slice(1);
+    },
+
     editItem(item) {
+      if (this.tableLoading) {
+        return;
+      }
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true

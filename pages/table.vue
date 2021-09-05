@@ -18,30 +18,6 @@
     </v-layout>
 
     <Table :model="selectedModel" :mapping="models[selectedModel.name]" />
-    <!-- <Accompany v-if="tableType == 'Accompany'" />
-    <BezelMaterial v-if="tableType == 'Bezel Material'" />
-    <Boutique v-if="tableType == 'Boutique'" />
-    <BraceletColor v-if="tableType == 'Bracelet Color'" />
-    <BraceletMaterial v-if="tableType == 'Bracelet Material'" />
-    <Brand v-if="tableType == 'Brand'" />
-    <Caliber v-if="tableType == 'Caliber'" />
-    <Clasp v-if="tableType == 'Clasp'" />
-    <ClaspMaterial v-if="tableType == 'Clasp Material'" />
-    <Collection v-if="tableType == 'Collection'" />
-    <Condition v-if="tableType == 'Condition'" />
-    <DialMaterial v-if="tableType == 'Dial Material'" />
-    <Function v-if="tableType == 'Function'" />
-    <Movement v-if="tableType == 'Movement'" />
-    <Product v-if="tableType == 'Product'" />
-    <ProductStatus v-if="tableType == 'Product Status'" />
-    <Rating v-if="tableType == 'Rating'" />
-    <Role v-if="tableType == 'Role'" />
-    <Subscription v-if="tableType == 'Subscription'" />
-    <TransactionInfo v-if="tableType == 'Transaction Info'" />
-    <TransactionRating v-if="tableType == 'Transaction Rating'" />
-    <TransactionStatus v-if="tableType == 'Transaction Status'" />
-    <UserStatus v-if="tableType == 'User Status'" />
-    <WatchModel v-if="tableType == 'Watch Model'" /> -->
     
   </v-container>
 </template>
@@ -49,32 +25,7 @@
 
 <script>
 import _ from 'lodash'
-import Accompany from '@/components/crudTable/accompany'
-import BezelMaterial from '@/components/crudTable/bezelMaterial'
-import Boutique from '@/components/crudTable/boutique'
-import BraceletColor from '@/components/crudTable/braceletColor'
-import BraceletMaterial from '@/components/crudTable/braceletMaterial'
-import Brand from '@/components/crudTable/brand'
-import Caliber from '@/components/crudTable/caliber'
-import Clasp from '@/components/crudTable/clasp'
-import ClaspMaterial from '@/components/crudTable/claspMaterial'
-import Collection from '@/components/crudTable/collection'
-import Condition from '@/components/crudTable/condition'
-import DialMaterial from '@/components/crudTable/dialMaterial'
-import Function from '@/components/crudTable/function'
-import Movement from '@/components/crudTable/movement'
-import Product from '@/components/crudTable/product'
-import ProductStatus from '@/components/crudTable/productStatus'
-import Rating from '@/components/crudTable/rating'
-import Role from '@/components/crudTable/role'
-import Subscription from '@/components/crudTable/subscription'
-import TransactionInfo from '@/components/crudTable/transactionInfo'
-import TransactionRating from '@/components/crudTable/transactionRating'
-import TransactionStatus from '@/components/crudTable/transactionStatus'
-import UserStatus from '@/components/crudTable/userStatus'
-import WatchModel from '@/components/crudTable/watchModel'
 import Table from '@/components/crudTable'
-
 import models from "@/API/models.json";
 
 export default {
@@ -108,36 +59,11 @@ export default {
       ],
       tableType: 'Brand',
       models,
-      // tableValue: [],
     }
   },
 
   components: {
     Table,
-    Accompany,
-    BezelMaterial,
-    Boutique,
-    BraceletColor,
-    BraceletMaterial,
-    Brand,
-    Caliber,
-    Clasp,
-    ClaspMaterial,
-    Collection,
-    Condition,
-    DialMaterial,
-    Function,
-    Movement,
-    Product,
-    ProductStatus,
-    Rating,
-    Role,
-    Subscription,
-    TransactionInfo,
-    TransactionRating,
-    TransactionStatus,
-    UserStatus,
-    WatchModel,
   },
 
   computed: {
@@ -151,39 +77,14 @@ export default {
     },
     selectedModel() {
       return this.modelOptions.find((item) => {
+        console.log(item)
         return item.label === this.tableType;
       }) || {}
     }
   },
-  mounted() {
-    // this.tableOptions = Object.keys(RealTable)
-    // this.parseSelect()
-  },
 
   methods: {
-    // objectToTable(object) {
-    //   let data = {
-    //     headers: [],
-    //     items: [],
-    //   }
-    //   let header = Object.keys(object[0])
-
-    //   data.items = object
-
-    //   header.map((e) => {
-    //     data.headers.push({
-    //       text: _.startCase(e),
-    //       value: e,
-    //     })
-    //   })
-
-    //   return data
-    // },
-
-    // parseSelect() {
-    //   let data = RealTable[this.tableType]
-    //   this.tableValue = this.objectToTable(data)
-    // },
-  },
+    
+  }
 }
 </script>

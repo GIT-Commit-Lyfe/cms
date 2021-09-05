@@ -59,8 +59,8 @@ export default {
   data() {
     return {
       form: {
-        username: 'admincms',
-        password: 'admincms',
+        username: 'admin',
+        password: 'admin',
       },
       loading: false,
       showPassword: false,
@@ -70,7 +70,7 @@ export default {
       ],
       passRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length >= 6) || 'Password min 6 characters',
+        (v) => (v && v.length >= 5) || 'Password min 5 characters',
       ],
     }
   },
