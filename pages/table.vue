@@ -75,7 +75,7 @@ import _ from 'lodash'
 // import WatchModel from '@/components/crudTable/watchModel'
 import Table from '@/components/crudTable'
 
-import models from "@/API/models.json";
+import models from "@API/models.json";
 
 export default {
   data() {

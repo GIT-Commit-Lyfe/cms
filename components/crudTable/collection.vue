@@ -75,8 +75,8 @@
 
 <script>
 import _ from 'lodash'
-import Brand from '@/api/brands'
-import Collection from '@/api/collections'
+import Brand from '@API/brands'
+import Collection from '@API/collections'
 
 export default {
   data: () => ({

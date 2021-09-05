@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import BraceletMaterial from '@/api/braceletMaterials'
+import BraceletMaterial from '@API/braceletMaterials'
 
 export default {
   data: () => ({

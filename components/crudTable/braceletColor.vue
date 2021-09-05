@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import BraceletColor from '@/api/braceletColors'
+import BraceletColor from '@API/braceletColors'
 
 export default {
   data: () => ({

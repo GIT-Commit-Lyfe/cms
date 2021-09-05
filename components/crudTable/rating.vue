@@ -82,8 +82,8 @@
 
 <script>
 import _ from 'lodash'
-import Rating from '@/api/ratings'
-// import Condition from '@/api/conditions'
+import Rating from '@API/ratings'
+// import Condition from '@API/conditions'
 
 export default {
   data: () => ({

@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import Function from '@/api/functions'
+import Function from '@API/functions'
 
 export default {
   data: () => ({

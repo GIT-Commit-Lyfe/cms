@@ -67,8 +67,8 @@
 
 <script>
 import _ from 'lodash'
-import Brand from '@/api/brands'
-import ClaspMaterial from '@/api/claspMaterials'
+import Brand from '@API/brands'
+import ClaspMaterial from '@API/claspMaterials'
 
 export default {
   data: () => ({

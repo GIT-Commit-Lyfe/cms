@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import Clasp from '@/api/clasps'
+import Clasp from '@API/clasps'
 
 export default {
   data: () => ({

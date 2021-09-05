@@ -172,8 +172,8 @@
 
 <script>
 import _ from 'lodash'
-import Product from '@/api/products'
-// import Condition from '@/api/conditions'
+import Product from '@API/products'
+// import Condition from '@API/conditions'
 
 export default {
   data: () => ({

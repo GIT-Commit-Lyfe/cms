@@ -69,7 +69,7 @@
 
 <script>
 import _ from 'lodash'
-import Conditions from '@/api/conditions'
+import Conditions from '@API/conditions'
 
 export default {
   data: () => ({

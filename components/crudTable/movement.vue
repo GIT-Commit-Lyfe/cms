@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import Movement from '@/api/movements'
+import Movement from '@API/movements'
 
 export default {
   data: () => ({

@@ -67,8 +67,8 @@
 
 <script>
 import _ from 'lodash'
-import Brand from '@/api/brands'
-import DialMaterial from '@/api/dialMaterials'
+import Brand from '@API/brands'
+import DialMaterial from '@API/dialMaterials'
 
 export default {
   data: () => ({
