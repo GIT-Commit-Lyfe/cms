@@ -215,8 +215,8 @@
 
 <script>
 import _ from 'lodash'
-import WatchModel from '@API/watchModels'
-import Caliber from '@API/calibers'
+import WatchModel from '@/API/watchModels'
+import Caliber from '@/API/calibers'
 
 export default {
   data: () => ({

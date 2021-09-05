@@ -68,7 +68,7 @@
 
 <script>
 import _ from 'lodash'
-import ProductStatus from '@API/productStatus'
+import ProductStatus from '@/API/productStatus'
 
 export default {
   data: () => ({

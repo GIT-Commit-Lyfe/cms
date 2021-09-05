@@ -75,8 +75,8 @@
 
 <script>
 import _ from 'lodash'
-import TransactionRating from '@API/transactionRatings'
-// import Condition from '@API/conditions'
+import TransactionRating from '@/API/transactionRatings'
+// import Condition from '@/API/conditions'
 
 export default {
   data: () => ({

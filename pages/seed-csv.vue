@@ -77,7 +77,7 @@
 import Papa from 'papaparse'
 import _ from 'lodash'
 // import SnackBar from '@/components/alert/snackBar'
-import Models from '@API/models.json'
+import Models from '@/API/models.json'
 // import { mapActions } from 'vuex'
 
 export default {

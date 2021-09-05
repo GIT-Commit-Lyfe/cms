@@ -68,8 +68,8 @@
 
 <script>
 import _ from 'lodash'
-import Role from '@API/roles'
-// import Condition from '@API/conditions'
+import Role from '@/API/roles'
+// import Condition from '@/API/conditions'
 
 export default {
   data: () => ({

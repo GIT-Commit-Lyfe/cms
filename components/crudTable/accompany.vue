@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import Accompany from '@API/accompany'
+import Accompany from '@/API/accompany'
 
 export default {
   data: () => ({

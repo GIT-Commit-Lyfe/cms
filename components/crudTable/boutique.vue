@@ -120,8 +120,8 @@
 
 <script>
 import _ from 'lodash'
-import Boutique from '@API/boutiques'
-// import Condition from '@API/conditions'
+import Boutique from '@/API/boutiques'
+// import Condition from '@/API/conditions'
 
 export default {
   data: () => ({

@@ -67,7 +67,7 @@
 
 <script>
 import _ from 'lodash'
-import BezelMaterial from '@API/bezelMaterials'
+import BezelMaterial from '@/API/bezelMaterials'
 
 export default {
   data: () => ({

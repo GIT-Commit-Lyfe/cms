@@ -102,7 +102,7 @@
 
 <script>
 import _ from 'lodash'
-import Transaction from '@API/transactions'
+import Transaction from '@/API/transactions'
 
 export default {
   data: () => ({
