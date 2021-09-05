@@ -1,5 +1,5 @@
 <template>
-  <v-data-table @pagination="pagination" :loading="tableLoading" :headers="headers" :items="items" class="elevation-1">
+  <v-data-table show-expand single-expand @pagination="pagination" :loading="tableLoading" :headers="headers" :items="items" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ model.label }} Table</v-toolbar-title>
@@ -111,6 +111,18 @@
     <template v-slot:no-data>
       <v-btn color="primary"> Reset </v-btn>
     </template>
+    <template  v-slot:expanded-item="{ item, headers }">
+      <td :colspan="headers.length">
+        <v-img
+          class="white--text align-end"
+          v-for="(model, index) in fileModels"
+          :key="index"
+          :src="item[model.key]"
+          max-width="10%"
+          contain
+        ><v-card-title>{{ fromCamelToLabel(model.key) }}</v-card-title></v-img>
+      </td>
+    </template>
   </v-data-table>
 </template>
 
@@ -206,6 +218,9 @@ export default {
           case "string":
             defaultObj[item.key] = "";
             break;
+          case "file":
+            defaultObj[item.key] = "";
+            break;
           case "number":
             defaultObj[item.key] = -1;
             break;
@@ -282,8 +297,7 @@ export default {
       return moment(item).fromNow();
     },
     fromCamelToLabel(text) {
-      const result = text.replace(/([A-Z])/g, " $1");
-      return result.charAt(0).toUpperCase() + result.slice(1);
+      return _.startCase(text);
     },
     editItem(item) {
       if (this.tableLoading) {

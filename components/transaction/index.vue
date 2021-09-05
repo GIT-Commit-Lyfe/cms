@@ -128,11 +128,15 @@
 
 <script>
 import _ from 'lodash'
+<<<<<<< HEAD:components/transaction/index.vue
 import moment from 'moment'
 import models from '@/API/models'
 import OptionsId from './optionsId'
 import Stepper from './stepper'
 import BuyerSeller from './buyerSeller'
+=======
+import Transaction from '@/API/transactions'
+>>>>>>> 40583afe34bfa3981e095d53fc7a5850d6024de7:components/crudTransaction/transaction.vue
 
 export default {
   data: () => ({
