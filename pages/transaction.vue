@@ -4,7 +4,7 @@
       <h2>Transaction</h2>
     </div>
     
-    <Transaction :model="model" :mapping="model"/>
+    <Transaction :model="modelTransaction" :mapping="models[model]"/>
   </v-container>
 </template>
 
@@ -12,12 +12,13 @@
 <script>
 import _ from 'lodash'
 import models from '@/API/models.json'
-import Transaction from '@/components/transaction'
+import Transaction from '@/components/crudTable'
 
 export default {
   data() {
     return {
       model: "Transaction",
+      models
     }
   },
 
@@ -26,6 +27,12 @@ export default {
   },
 
   computed: {
+    modelTransaction() {
+      return {
+        name: this.model,
+        label: this.model,
+      }
+    },
   },
 }
 </script>

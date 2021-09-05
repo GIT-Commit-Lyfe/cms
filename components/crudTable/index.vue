@@ -9,16 +9,29 @@
         </v-btn>
         <v-spacer></v-spacer>
 
-        <v-dialog v-model="dialog" max-width="1000px">
+        <v-dialog v-model="dialog" :max-width="dialogWidth">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               Add {{ model.label }}
             </v-btn>
           </template>
-          <v-card>
+          <v-card class="px-10 py-5">
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
+
+            <template v-if="dialogTransaction">
+              <v-row class="mt-2">
+                <v-col cols="12" md="8" class="px-3">
+                  <BuyerSeller />
+                </v-col>
+
+                <v-col cols="12" md="4" class="px-3">
+                  <Steppers />
+                </v-col>
+              </v-row>
+              <v-divider class="mt-10 mb-5" horizontal></v-divider>
+            </template>
 
             <v-card-text>
               <v-container>
@@ -109,7 +122,7 @@
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary"> Reset </v-btn>
+      <v-btn color="primary" > Reset </v-btn>
     </template>
     <template  v-slot:expanded-item="{ item, headers }">
       <td :colspan="headers.length">
@@ -130,10 +143,14 @@
 import _ from 'lodash'
 import moment from "moment"
 import OptionsId from "./optionsId"
+import Steppers from "../transaction/stepper.vue"
+import BuyerSeller from "../transaction/buyerSeller"
 
 export default {
   components: {
     OptionsId,
+    Steppers,
+    BuyerSeller
   },
   props: [
     "model",
@@ -144,6 +161,7 @@ export default {
     tableLoading: false,
     showId: false,
     dialog: false,
+    dialogWidth: '1000px',
     dialogDelete: false,
     items: [],
     relationModels: [],
@@ -152,11 +170,13 @@ export default {
     uploadingImage: {},
     editedIndex: -1,
     editedItem: {},
+    dialogTransaction: false
   }),
 
   mounted() {
     this.fetchData();
     this.seperateModels();
+    this.specialTransaction();
   },
 
   computed: {
@@ -170,6 +190,7 @@ export default {
       }
       const idHeaders = _.filter(this.mapping, (item) => /Id/.test(item.key));
       const idPopulatedHeaders = _.map(idHeaders, (item) => ({ key: item.key.replace(/Id/, ""), type: "string" }))
+      // console.log(idPopulatedHeaders, '<----')
       const nonIdHeaders = _.filter(this.mapping, (item) => !/Id/.test(item.key));
       const idColumn = this.showId ? [idObj, ...idHeaders] : []
 
@@ -298,6 +319,12 @@ export default {
     },
     fromCamelToLabel(text) {
       return _.startCase(text);
+    },
+    specialTransaction() {
+      if(this.model.label === "Transaction") {
+        this.dialogTransaction = true
+        this.dialogWidth = '95vw'
+      }
     },
     editItem(item) {
       if (this.tableLoading) {

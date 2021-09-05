@@ -77,10 +77,10 @@ export default {
     },
     selectedModel() {
       return this.modelOptions.find((item) => {
-        console.log(item)
+        console.log(item.label)
         return item.label === this.tableType;
       }) || {}
-    }
+    },
   },
 
   methods: {
