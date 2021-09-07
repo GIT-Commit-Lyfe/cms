@@ -19,7 +19,8 @@
     "moment": "^2.29.1",
     "nuxt": "^2.15.3",
     "papaparse": "^5.3.1",
-    "secure-ls": "^1.2.6"
+    "secure-ls": "^1.2.6",
+    "xlsx": "^0.17.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",
