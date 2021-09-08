@@ -4,7 +4,7 @@ module.exports = {
       name: 'tws-cms',
       exec_mode: 'cluster',
       instances: 'max', // Or a number of instances
-      script: './node_modules/nuxt/bin/nuxt.js',
+      script: 'yarn',
       args: 'start',
       host: '0.0.0.0'
     }
