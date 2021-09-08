@@ -5,8 +5,7 @@ module.exports = {
       exec_mode: 'cluster',
       instances: 'max', // Or a number of instances
       script: 'yarn',
-      args: 'start',
-      host: '0.0.0.0'
+      args: 'start'
     }
   ]
 }
