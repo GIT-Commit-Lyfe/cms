@@ -1,11 +1,19 @@
 <template>
-  <v-data-table show-expand single-expand @pagination="pagination" :loading="tableLoading" :headers="headers" :items="items" class="elevation-1">
+  <v-data-table
+    show-expand
+    single-expand
+    @pagination="pagination"
+    :loading="tableLoading"
+    :headers="headers"
+    :items="items"
+    class="elevation-1"
+  >
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ model.label }} Table</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-btn color="primary" dark plain @click="toggleId">
-          {{ showId ? "Hide ID" : "Show ID" }}
+          {{ showId ? 'Hide ID' : 'Show ID' }}
         </v-btn>
         <v-spacer></v-spacer>
 
@@ -20,23 +28,95 @@
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
 
+            <!-- transaction -->
             <template v-if="dialogTransaction">
-              <v-row class="mt-2">
-                <v-col cols="12" md="8" class="px-3">
-                  <BuyerSeller />
-                </v-col>
+              <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
-                <v-col cols="12" md="4" class="px-3">
-                  <Steppers />
+              <v-row class="mt-2">
+                <v-col cols="12" md="4" class="px-5">
+                  <div class="text-h4 mb-4">$ 13.000,00</div>
+                  <div class="text-h5 mb-10">Buyer Name</div>
+                  <template>
+                    <v-col class="align-center">
+                      <v-img
+                        :aspect-ratio="6 / 6"
+                        :width="width"
+                        class="mx-auto"
+                        src="https://cdn2.chrono24.com/cdn-cgi/image/f=auto,metadata=none,q=65,h=305/images/topmodels/1-w70x429knb132x17edf24c63-Original.png"
+                      ></v-img>
+                      <v-slider
+                        v-model="width"
+                        class="align-self-stretch mt-5"
+                        min="200"
+                        max="500"
+                        step="1"
+                      ></v-slider>
+                    </v-col>
+                  </template>
+                </v-col>
+                <v-col cols="12" md="8" class="px-5" >
+                  <div class="text-h5 mb-3">Watch Name</div>
+                  <div class="text-h6 mb-2">This description product</div>
+                  <div class="text-p mb-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga aliquid reiciendis libero sequi vero ipsum cum, quas rerum maiores maxime ratione reprehenderit voluptatem laboriosam asperiores iste quasi neque sed ducimus sint odio inventore dolores necessitatibus autem. Laboriosam, dignissimos commodi facilis assumenda eius itaque perspiciatis nihil, labore recusandae, numquam dicta ut voluptatibus repudiandae incidunt ullam blanditiis fugiat ad odio sunt! Repellat amet deserunt, blanditiis animi impedit illum quibusdam totam numquam ipsum voluptatibus nostrum molestias eaque! Esse id exercitationem veniam consectetur nam obcaecati, quo at debitis provident reprehenderit fuga perspiciatis sit in quasi voluptatem natus blanditiis aut error? Aliquid excepturi earum consectetur.</div>
                 </v-col>
               </v-row>
+
+              <v-col>
+                <div class="text-h5 mt-10 pb-3">Transaction Status</div>
+                <template>
+                  <v-stepper alt-labels>
+                    <v-stepper-header>
+                      <v-stepper-step step="1" complete>
+                        Verification
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="2" complete >
+                        Paid
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="3" complete >
+                        Shipping
+                        <small class="pt-2">Lorem, ipsum.</small>
+                        <small class="pt-1">Lorem, ipsum.</small>
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="4" complete >
+                        Done
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step :rules="[() => false]" step="5" >
+                        Pending
+                        <small class="pt-2">Pending message</small>
+                      </v-stepper-step>
+                    </v-stepper-header>
+                  </v-stepper>
+                </template>
+              </v-col>
               <v-divider class="mt-10 mb-5" horizontal></v-divider>
             </template>
 
-            <v-card-text>
+            <v-card-text v-if="!dialogTransaction">
               <v-container>
                 <v-row>
-                  <v-col v-for="(item, index) in nonRelationModels" :key="index" cols="12" :md="nonRelationModels.length < 4 ? 12 / nonRelationModels.length : 3" :sm="nonRelationModels.length < 3 ? 12 / nonRelationModels.length : 4">
+                  <v-col
+                    v-for="(item, index) in nonRelationModels"
+                    :key="index"
+                    cols="12"
+                    :md="
+                      nonRelationModels.length < 4
+                        ? 12 / nonRelationModels.length
+                        : 3
+                    "
+                    :sm="
+                      nonRelationModels.length < 3
+                        ? 12 / nonRelationModels.length
+                        : 4
+                    "
+                  >
                     <v-text-field
                       v-model="editedItem[item.key]"
                       :label="fromCamelToLabel(item.key)"
@@ -47,16 +127,36 @@
                 <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
                 <v-row>
-                  <v-col v-for="(model, index) in relationModels" :key="index" cols="12" :md="relationModels.length < 4 ? 12 / relationModels.length : 3" :sm="relationModels.length < 3 ? 12 / relationModels.length : 4">
-                    <OptionsId :model="model.key" @updateItem="updateItem" :modelId="editedItem[model.key]" />
+                  <v-col
+                    v-for="(model, index) in relationModels"
+                    :key="index"
+                    cols="12"
+                    :md="
+                      relationModels.length < 4 ? 12 / relationModels.length : 3
+                    "
+                    :sm="
+                      relationModels.length < 3 ? 12 / relationModels.length : 4
+                    "
+                  >
+                    <OptionsId
+                      :model="model.key"
+                      @updateItem="updateItem"
+                      :modelId="editedItem[model.key]"
+                    />
                   </v-col>
                 </v-row>
 
                 <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
                 <v-row>
-                  <v-col v-for="(model, index) in fileModels" :key="index" cols="12" :md="fileModels.length < 4 ? 12 / fileModels.length : 3" :sm="fileModels.length < 3 ? 12 / fileModels.length : 4">
-                    <h3 class="mb-3">{{fromCamelToLabel(model.key)}}</h3>
+                  <v-col
+                    v-for="(model, index) in fileModels"
+                    :key="index"
+                    cols="12"
+                    :md="fileModels.length < 4 ? 12 / fileModels.length : 3"
+                    :sm="fileModels.length < 3 ? 12 / fileModels.length : 4"
+                  >
+                    <h3 class="mb-3">{{ fromCamelToLabel(model.key) }}</h3>
                     <v-progress-circular
                       v-if="uploadingImage[model.key]"
                       indeterminate
@@ -68,7 +168,14 @@
                       max-width="20%"
                       contain
                     ></v-img>
-                    <v-btn v-if="editedItem[model.key]" color="blue darken-1" text @click="updateImage(model.key)"> Update Image </v-btn>
+                    <v-btn
+                      v-if="editedItem[model.key]"
+                      color="blue darken-1"
+                      text
+                      @click="updateImage(model.key)"
+                    >
+                      Update Image
+                    </v-btn>
                     <input
                       v-if="!editedItem[model.key]"
                       type="file"
@@ -83,8 +190,22 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="closeModal"> Cancel </v-btn>
-              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="save"> Save </v-btn>
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="closeModal"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="save"
+              >
+                Save
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -96,10 +217,18 @@
             >
             <v-card-actions class="pb-5">
               <v-spacer></v-spacer>
-              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="closeModal"
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="closeModal"
                 >Cancel</v-btn
               >
-              <v-btn :disabled="tableLoading" color="blue darken-1" text @click="deleteItemConfirm"
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="deleteItemConfirm"
                 >OK</v-btn
               >
               <v-spacer></v-spacer>
@@ -109,7 +238,11 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.no`]="options">
-      {{ options.index + 1 + (paginationInfo.page - 1)*paginationInfo.itemsPerPage}}
+      {{
+        options.index +
+        1 +
+        (paginationInfo.page - 1) * paginationInfo.itemsPerPage
+      }}
     </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ toDate(item.createdAt) }}
@@ -122,9 +255,9 @@
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" > Reset </v-btn>
+      <v-btn color="primary"> Reset </v-btn>
     </template>
-    <template  v-slot:expanded-item="{ item, headers }">
+    <template v-slot:expanded-item="{ item, headers }">
       <td :colspan="headers.length">
         <v-img
           class="white--text align-end"
@@ -133,7 +266,8 @@
           :src="item[model.key]"
           max-width="10%"
           contain
-        ><v-card-title>{{ fromCamelToLabel(model.key) }}</v-card-title></v-img>
+          ><v-card-title>{{ fromCamelToLabel(model.key) }}</v-card-title></v-img
+        >
       </td>
     </template>
   </v-data-table>
@@ -141,26 +275,24 @@
 
 <script>
 import _ from 'lodash'
-import moment from "moment"
-import OptionsId from "./optionsId"
-import Steppers from "../transaction/stepper.vue"
-import BuyerSeller from "../transaction/buyerSeller"
+import moment from 'moment'
+import OptionsId from './optionsId'
+import Steppers from '../transaction/stepper.vue'
+import BuyerSeller from '../transaction/buyerSeller'
 
 export default {
   components: {
     OptionsId,
     Steppers,
-    BuyerSeller
+    BuyerSeller,
   },
-  props: [
-    "model",
-    "mapping",
-  ],
+  props: ['model', 'mapping'],
   data: () => ({
     paginationInfo: {},
     tableLoading: false,
     showId: false,
     dialog: false,
+    width: '200px',
     dialogWidth: '1000px',
     dialogDelete: false,
     items: [],
@@ -170,58 +302,66 @@ export default {
     uploadingImage: {},
     editedIndex: -1,
     editedItem: {},
-    dialogTransaction: false
+    dialogTransaction: false,
   }),
 
   mounted() {
-    this.fetchData();
-    this.seperateModels();
-    this.specialTransaction();
+    this.fetchData()
+    this.seperateModels()
+    this.specialTransaction()
   },
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? `Add ${this.model.label}` : `Edit ${this.model.label}`
+      return this.editedIndex === -1
+        ? `Add ${this.model.label}`
+        : `Edit ${this.model.label}`
     },
     headers() {
       const idObj = {
-        key: "id",
-        type: "string",
+        key: 'id',
+        type: 'string',
       }
-      const idHeaders = _.filter(this.mapping, (item) => /Id/.test(item.key));
-      const idPopulatedHeaders = _.map(idHeaders, (item) => ({ key: item.key.replace(/Id/, ""), type: "string" }))
+      const idHeaders = _.filter(this.mapping, (item) => /Id/.test(item.key))
+      const idPopulatedHeaders = _.map(idHeaders, (item) => ({
+        key: item.key.replace(/Id/, ''),
+        type: 'string',
+      }))
       // console.log(idPopulatedHeaders, '<----')
-      const nonIdHeaders = _.filter(this.mapping, (item) => !/Id/.test(item.key));
+      const nonIdHeaders = _.filter(
+        this.mapping,
+        (item) => !/Id/.test(item.key)
+      )
       const idColumn = this.showId ? [idObj, ...idHeaders] : []
 
       const completedMapping = [
         {
-          key: "no",
-          type: "number",
+          key: 'no',
+          type: 'number',
         },
         ...idColumn,
         ...idPopulatedHeaders,
         ...nonIdHeaders,
         {
-          key: "createdAt",
-          type: "date",
+          key: 'createdAt',
+          type: 'date',
         },
         {
-          key: "updatedAt",
-          type: "date",
+          key: 'updatedAt',
+          type: 'date',
         },
-        { 
+        {
           text: 'actions',
           type: 'actions',
         },
       ]
       return completedMapping.map((item) => {
-        if (item.type === "actions") {
+        if (item.type === 'actions') {
           return {
             text: 'Actions',
             value: 'actions',
             sortable: false,
-          };
+          }
         }
         return {
           text: this.fromCamelToLabel(item.key),
@@ -233,24 +373,24 @@ export default {
       if (!Array.isArray(this.mapping)) {
         return {}
       }
-      const defaultObj = {};
-      this.mapping.forEach(item => {
+      const defaultObj = {}
+      this.mapping.forEach((item) => {
         switch (item.type) {
-          case "string":
-            defaultObj[item.key] = "";
-            break;
-          case "file":
-            defaultObj[item.key] = "";
-            break;
-          case "number":
-            defaultObj[item.key] = -1;
-            break;
+          case 'string':
+            defaultObj[item.key] = ''
+            break
+          case 'file':
+            defaultObj[item.key] = ''
+            break
+          case 'number':
+            defaultObj[item.key] = -1
+            break
           default:
-            break;
+            break
         }
-      });
-      return defaultObj;
-    }
+      })
+      return defaultObj
+    },
   },
 
   watch: {
@@ -260,104 +400,111 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete()
     },
-    "model.name": function (val) {
-      this.fetchData();
-      this.seperateModels();
-    }
+    'model.name': function (val) {
+      this.fetchData()
+      this.seperateModels()
+    },
   },
 
   methods: {
     // api
     async fetchData() {
       try {
-        this.tableLoading = true;
-        const { data } = await this.$axios.get(`/api/cms/${this.model.name}`);
-        this.items = _.cloneDeep(data);
+        this.tableLoading = true
+        const { data } = await this.$axios.get(`/api/cms/${this.model.name}`)
+        this.items = _.cloneDeep(data)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
-      this.tableLoading = false;
+      this.tableLoading = false
     },
 
     // event handlers
     updateItem({ model, payload }) {
-      this.editedItem[model] = payload;
+      this.editedItem[model] = payload
     },
     pagination(payload) {
-      this.paginationInfo = payload;
+      this.paginationInfo = payload
     },
     async handleFileChange(event, key) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
+      const file = event.target.files[0]
+      const formData = new FormData()
+      formData.append('file', file)
       try {
-        this.uploadingImage[key] = true;
-        this.$forceUpdate();
-        const { data } = await this.$axios.post('/api/upload', formData);
-        this.uploadingImage[key] = false;
-        this.editedItem[key] = data.publicURL;
-        this.$forceUpdate();
+        this.uploadingImage[key] = true
+        this.$forceUpdate()
+        const { data } = await this.$axios.post('/api/upload', formData)
+        this.uploadingImage[key] = false
+        this.editedItem[key] = data.publicURL
+        this.$forceUpdate()
       } catch (err) {
-        alert(err.message);
+        alert(err.message)
       }
     },
     updateImage(key) {
-      this.editedItem[key] = "";
-      this.$forceUpdate();
+      this.editedItem[key] = ''
+      this.$forceUpdate()
     },
 
     seperateModels() {
-      this.relationModels = this.mapping.filter((item) => item.key.includes("Id"));
-      this.nonRelationModels = this.mapping.filter((item) => !item.key.includes("Id") && item.type !== "file");
-      this.fileModels = this.mapping.filter((item) => item.type === "file");
+      this.relationModels = this.mapping.filter((item) =>
+        item.key.includes('Id')
+      )
+      this.nonRelationModels = this.mapping.filter(
+        (item) => !item.key.includes('Id') && item.type !== 'file'
+      )
+      this.fileModels = this.mapping.filter((item) => item.type === 'file')
     },
     toggleId() {
-      this.showId = !this.showId;
+      this.showId = !this.showId
     },
     toDate(item) {
-      return moment(item).fromNow();
+      return moment(item).fromNow()
     },
     fromCamelToLabel(text) {
-      return _.startCase(text);
+      return _.startCase(text)
     },
     specialTransaction() {
-      if(this.model.label === "Transaction") {
+      if (this.model.label === 'Transaction') {
         this.dialogTransaction = true
-        this.dialogWidth = '95vw'
+        this.dialogWidth = '90vw'
       }
     },
     editItem(item) {
       if (this.tableLoading) {
-        return;
+        return
       }
-      this.editedIndex = this.items.indexOf(item);
-      const defaultKeys = Object.keys(this.defaultItem);
-      this.editedItem = _.pick(item, defaultKeys);
+      this.editedIndex = this.items.indexOf(item)
+      const defaultKeys = Object.keys(this.defaultItem)
+      this.editedItem = _.pick(item, defaultKeys)
       this.dialog = true
     },
 
     deleteItem(item) {
       if (this.tableLoading) {
-        return;
+        return
       }
       this.editedIndex = this.items.indexOf(item)
-      const defaultKeys = Object.keys(this.defaultItem);
-      this.editedItem = _.pick(item, defaultKeys);
+      const defaultKeys = Object.keys(this.defaultItem)
+      this.editedItem = _.pick(item, defaultKeys)
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.tableLoading = true;
-      this.$axios.delete(`/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`)
+      this.tableLoading = true
+      this.$axios
+        .delete(
+          `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`
+        )
         .then(() => {
-          this.items.splice(this.editedIndex, 1);
+          this.items.splice(this.editedIndex, 1)
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         })
         .finally(() => {
-          this.tableLoading = false;
-          this.editedIndex = -1;
+          this.tableLoading = false
+          this.editedIndex = -1
         })
       this.closeDelete()
     },
@@ -377,35 +524,40 @@ export default {
     },
 
     closeModal() {
-      this.close();
-      this.closeDelete();
-      this.editedIndex = -1;
+      this.close()
+      this.closeDelete()
+      this.editedIndex = -1
     },
     save() {
-      this.tableLoading = true;
+      this.tableLoading = true
       if (this.editedIndex > -1) {
-        this.$axios.patch(`/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`, this.editedItem)
+        this.$axios
+          .patch(
+            `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`,
+            this.editedItem
+          )
           .then(({ data }) => {
-            Object.assign(this.items[this.editedIndex], data);
+            Object.assign(this.items[this.editedIndex], data)
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err)
           })
           .finally(() => {
-            this.tableLoading = false;
-            this.editedIndex = -1;
+            this.tableLoading = false
+            this.editedIndex = -1
           })
       } else {
-        this.$axios.post(`/api/cms/${this.model.name}`, this.editedItem)
+        this.$axios
+          .post(`/api/cms/${this.model.name}`, this.editedItem)
           .then(({ data }) => {
-            this.items.push(data);
+            this.items.push(data)
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err)
           })
           .finally(() => {
-            this.tableLoading = false;
-            this.editedIndex = -1;
+            this.tableLoading = false
+            this.editedIndex = -1
           })
       }
       this.close()
