@@ -162,15 +162,18 @@ export default {
 
         reader.readAsText(event.target.files[0])
         reader.onload = (e) => {
-          Papa.parse(e.target.result, {
+          let csvString = e.target.result;
+          const lastCsvStringNewLine = _.last(csvString) === "\n";
+          csvString = lastCsvStringNewLine ? csvString.substring(0, csvString.length - 1) : csvString;
+          Papa.parse(csvString, {
             header: true,
 
-            complete: ({ data }) => {
+            complete: ({ data, meta }) => {
               if ( data.length <= 1 ) {
                 alert('Data not found, please check and update')
                 this.resetData()
               } else {
-                let keyFiles = Object.keys(data[0]),
+                let keyFiles = meta.fields,
                     keyValid = this.modelArrayValid
 
                 if (_.isEqual(keyFiles, keyValid)) {
