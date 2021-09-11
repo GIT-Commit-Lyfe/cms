@@ -578,7 +578,7 @@ export default {
       this.tags = {}
     },
     customFilter(value, search, item) {
-      const transformedValue = value?.toLowerCase()
+      const transformedValue = value?.toString().toLowerCase()
       const found = this.tags[transformedValue]
       const partialFound = _.find(this.tags, (tag, key) => {
         return transformedValue?.includes(tag)
