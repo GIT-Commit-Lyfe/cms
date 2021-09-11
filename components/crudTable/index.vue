@@ -246,12 +246,32 @@
       <v-row>
         <v-spacer></v-spacer>
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="search"
-            label="Search"
-            class="mx-4"
-          ></v-text-field>
+          <v-form @submit="addTag">
+            <v-text-field
+              v-model="search"
+              label="Search"
+              class="mx-4"
+            ></v-text-field>
+          </v-form>
         </v-col>
+      </v-row>
+      <v-row>
+        <v-spacer></v-spacer>
+        <v-btn
+          v-if="Object.values(tags).length > 0"
+          class="mx-4"
+          color="red"
+          plain
+          @click="clearTags"
+          >Clear tags</v-btn
+        >
+      </v-row>
+      <v-row>
+        <v-chip-group class="mx-8 mb-8" column>
+          <v-chip close @click:close="removeTag(key)" v-for="(tag, key) in tags" :key="key">
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
       </v-row>
     </template>
     <template v-slot:[`item.no`]="options">
@@ -314,6 +334,7 @@ export default {
   props: ['model', 'mapping'],
   data: () => ({
     search: '',
+    tags: {},
     paginationInfo: {},
     tableLoading: false,
     showId: false,
@@ -533,6 +554,25 @@ export default {
           this.resetCopying()
         })
     },
+    addTag(e) {
+      e.preventDefault()
+      const input = _.trim(this.search.toLowerCase())
+      if (!input) {
+        this.search = ''
+        return
+      }
+      this.tags[input] = input
+      this.search = ''
+    },
+    removeTag(key) {
+      const obj = Object.assign({}, this.tags)
+      delete obj[key]
+      this.tags = Object.assign({}, obj)
+    },
+    clearTags() {
+      this.tags = {}
+    },
+
     editItem(item) {
       if (this.tableLoading) {
         return
