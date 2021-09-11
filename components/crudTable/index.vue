@@ -6,7 +6,8 @@
     :loading="tableLoading"
     :headers="headers"
     :items="items"
-    :search="search"
+    :search="searchBar"
+    :custom-filter="customFilter"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -362,6 +363,10 @@ export default {
   },
 
   computed: {
+    searchBar() {
+      const tags = Object.values(this.tags)
+      return tags.join(':')
+    },
     formTitle() {
       return this.editedIndex === -1
         ? `Add ${this.model.label}`
@@ -562,15 +567,23 @@ export default {
         return
       }
       this.tags[input] = input
+      this.tags = Object.assign({}, this.tags)
       this.search = ''
     },
     removeTag(key) {
-      const obj = Object.assign({}, this.tags)
-      delete obj[key]
-      this.tags = Object.assign({}, obj)
+      delete this.tags[key]
+      this.tags = Object.assign({}, this.tags)
     },
     clearTags() {
       this.tags = {}
+    },
+    customFilter(value, search, item) {
+      const transformedValue = value?.toLowerCase()
+      const found = this.tags[transformedValue]
+      const partialFound = _.find(this.tags, (tag, key) => {
+        return transformedValue?.includes(tag)
+      })
+      return !!found || !!partialFound
     },
 
     editItem(item) {
