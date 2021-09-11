@@ -6,6 +6,7 @@
     :loading="tableLoading"
     :headers="headers"
     :items="items"
+    :search="search"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -242,6 +243,16 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
+      <v-row>
+        <v-spacer></v-spacer>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="search"
+            label="Search"
+            class="mx-4"
+          ></v-text-field>
+        </v-col>
+      </v-row>
     </template>
     <template v-slot:[`item.no`]="options">
       {{
@@ -302,6 +313,7 @@ export default {
   },
   props: ['model', 'mapping'],
   data: () => ({
+    search: '',
     paginationInfo: {},
     tableLoading: false,
     showId: false,
