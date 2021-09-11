@@ -16,7 +16,13 @@
           {{ showId ? 'Hide ID' : 'Show ID' }}
         </v-btn>
         <v-spacer></v-spacer>
-
+        <v-btn v-if="copying" plain color="grey" dark @click="cancelCopying">
+          Cancel
+        </v-btn>
+        <v-btn v-if="copying" plain color="primary" @click="pasteCopying" dark>
+          Paste
+        </v-btn>
+        <v-spacer></v-spacer>
         <v-dialog v-model="dialog" :max-width="dialogWidth">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
@@ -251,11 +257,19 @@
       {{ toDate(item.updatedAt) }}
     </template>
     <template v-slot:[`item.actions`]="{ item }">
+      <v-icon small class="mr-2" @click="copyItem(item)"> mdi-content-copy </v-icon>
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn color="primary"> Reset </v-btn>
+    <template v-slot:[`body.prepend`]>
+      <tr style="background: lightblue" v-if="copying || copiedIndex !== -1">
+        <td></td>
+        <td v-for="(header, key) in headers" :key="key">
+          <span v-if="header.value === 'no'"></span>
+          <span v-else-if="header.value === 'createdAt' || header.value === 'updatedAt'">{{ toDate(items[copiedIndex][header.value]) }}</span>
+          <span v-else>{{ items[copiedIndex][header.value] }}</span>
+        </td>
+      </tr>
     </template>
     <template v-slot:expanded-item="{ item, headers }">
       <td :colspan="headers.length">
@@ -302,6 +316,9 @@ export default {
     uploadingImage: {},
     editedIndex: -1,
     editedItem: {},
+    copying: false,
+    copiedItem: {},
+    copiedIndex: -1,
     dialogTransaction: false,
   }),
 
@@ -469,6 +486,40 @@ export default {
         this.dialogTransaction = true
         this.dialogWidth = '90vw'
       }
+    },
+    copyItem(item) {
+      if (this.tableLoading) {
+        return
+      }
+      this.copying = true
+      this.copiedIndex = this.items.indexOf(item)
+      this.copiedItem = _.pick(item, Object.keys(this.defaultItem))
+    },
+    cancelCopying() {
+      if (this.tableLoading) {
+        return
+      }
+      this.resetCopying()
+    },
+    resetCopying() {
+      this.copying = false
+      this.copiedIndex = -1
+      this.copiedItem = {}
+    },
+    pasteCopying() {
+      this.tableLoading = true
+      this.$axios
+        .post(`/api/cms/${this.model.name}`, this.copiedItem)
+        .then(({ data }) => {
+          this.items.push(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          this.tableLoading = false
+          this.resetCopying()
+        })
     },
     editItem(item) {
       if (this.tableLoading) {
