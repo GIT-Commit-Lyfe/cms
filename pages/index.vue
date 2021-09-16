@@ -1,23 +1,13 @@
 <template>
-  <v-col justify="center" align="center">
-      <div class="mt-10 text-center">
-        <h1>CMS DASHBOARD</h1>
-      </div>
-      <br>
-      <br>
-      <logo />
-      <vuetify-logo />
-  </v-col>
+  <Dashboard />
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import Dashboard from '@/components/dashboard'
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo
+    Dashboard,
   }
 }
 </script>

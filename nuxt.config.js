@@ -45,6 +45,10 @@ export default {
     {
       src: '~/plugins/nuxt-client-init.client.js',
       mode: 'client'
+    },
+    {
+      src: '~/plugins/vue-product-zoomer.js',
+      mode: 'client'
     }
   ],
 

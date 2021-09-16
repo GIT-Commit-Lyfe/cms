@@ -41,31 +41,53 @@
               <v-divider class="mt-10 mb-5" horizontal></v-divider>
 
               <v-row class="mt-2">
-                <v-col cols="12" md="4" class="px-5">
-                  <div class="text-h4 mb-4">$ 13.000,00</div>
-                  <div class="text-h5 mb-10">Buyer Name</div>
-                  <template>
-                    <v-col class="align-center">
-                      <v-img
-                        :aspect-ratio="6 / 6"
-                        :width="width"
-                        class="mx-auto"
-                        src="https://cdn2.chrono24.com/cdn-cgi/image/f=auto,metadata=none,q=65,h=305/images/topmodels/1-w70x429knb132x17edf24c63-Original.png"
-                      ></v-img>
-                      <v-slider
-                        v-model="width"
-                        class="align-self-stretch mt-5"
-                        min="200"
-                        max="500"
-                        step="1"
-                      ></v-slider>
-                    </v-col>
-                  </template>
+                <v-col cols="12" md="5" class="px-5">
+                  <ImageThumbnail />
                 </v-col>
-                <v-col cols="12" md="8" class="px-5" >
-                  <div class="text-h5 mb-3">Watch Name</div>
-                  <div class="text-h6 mb-2">This description product</div>
-                  <div class="text-p mb-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga aliquid reiciendis libero sequi vero ipsum cum, quas rerum maiores maxime ratione reprehenderit voluptatem laboriosam asperiores iste quasi neque sed ducimus sint odio inventore dolores necessitatibus autem. Laboriosam, dignissimos commodi facilis assumenda eius itaque perspiciatis nihil, labore recusandae, numquam dicta ut voluptatibus repudiandae incidunt ullam blanditiis fugiat ad odio sunt! Repellat amet deserunt, blanditiis animi impedit illum quibusdam totam numquam ipsum voluptatibus nostrum molestias eaque! Esse id exercitationem veniam consectetur nam obcaecati, quo at debitis provident reprehenderit fuga perspiciatis sit in quasi voluptatem natus blanditiis aut error? Aliquid excepturi earum consectetur.</div>
+
+                <v-col cols="12" md="7" class="px-5" >
+                  <template>
+                    <v-row class="mb-5" justify="start">
+                      <v-col cols="12" md="6" class="p-2">
+                        <v-card outlined >
+                          <v-list-item three-line>
+                            <v-list-item-content>
+                              <div class="text-overline mb-2">
+                                Seller
+                              </div>
+                              <v-list-item-title class="text-h5 mb-1">
+                                Seller Name
+                              </v-list-item-title>
+                              <v-list-item-subtitle>Lorem ipsum, dolor sit amet consectetur adipisicing</v-list-item-subtitle>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-card>
+                      </v-col>
+                      <v-col cols="12" md="6" class="p-2">
+                        <v-card outlined >
+                          <v-list-item three-line>
+                            <v-list-item-content>
+                              <div class="text-overline mb-2">
+                                Buyer
+                              </div>
+                              <v-list-item-title class="text-h5 mb-1">
+                                Buyer Name
+                              </v-list-item-title>
+                              <v-list-item-subtitle>Lorem ipsum dolor sit amet consectetur adipisicing elit.</v-list-item-subtitle>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+
+                    <div class="text-h5 mb-4 font-weight-light">Rolex Daytona 6240 Chronograph Verified Authentic by Rolex, EXTREMELY RARE</div>
+                    <div class="text-h4 bold font-weight-bold">$200,000</div>
+                    <div class="text-p mb-5" style="font-size: 11px;">Price option</div>
+                    <template>
+                      <div class="text-p mb-2">This Rolex Daytona 6240 Chronograph Vintage watch has been verified as authentic by Rolex. Authenticity report is available upon request. The reference 6240 was the first Daytona to incorporate screw-down pushers. Manufactured solely in stainless steel, the chronograph also features an acrylic tachometer bezel. In production from 1965 through 1969, approximately 1,700 pieces were made. The case is in overall good condition. Crystal glazing with light scratches. The dial is in overall good condition with some surface wear. The movement is running and chronograph is operating. Model No. 6240, Serial No. 1439065, Bracelet No. 6635/0. Comes with a new original Rolex travel pouch.
+                      </div>
+                    </template>
+                  </template>
                 </v-col>
               </v-row>
 
@@ -106,10 +128,11 @@
               </v-col>
               <v-divider class="mt-10 mb-5" horizontal></v-divider>
             </template>
+            <!-- end transaction -->
 
-            <v-card-text v-if="!dialogTransaction">
+            <v-card-text>
               <v-container>
-                <v-row>
+                <v-row  v-if="!dialogTransaction">
                   <v-col
                     v-for="(item, index) in nonRelationModels"
                     :key="index"
@@ -132,7 +155,7 @@
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction"></v-divider>
 
                 <v-row>
                   <v-col
@@ -154,7 +177,7 @@
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction"></v-divider>
 
                 <v-row>
                   <v-col
@@ -195,6 +218,16 @@
                 </v-row>
               </v-container>
             </v-card-text>
+
+            <v-col cols="12">
+              <v-textarea
+                outlined
+                name="description"
+                label="Description"
+                value="input update description"
+              ></v-textarea>
+            </v-col>
+            <v-divider class="mt-5 mb-5" horizontal v-if="dialogTransaction"></v-divider>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -325,12 +358,14 @@ import moment from 'moment'
 import OptionsId from './optionsId'
 import Steppers from '../transaction/stepper.vue'
 import BuyerSeller from '../transaction/buyerSeller'
+import ImageThumbnail from '../transaction/imageThumbnail.vue'
 
 export default {
   components: {
     OptionsId,
     Steppers,
     BuyerSeller,
+    ImageThumbnail,
   },
   props: ['model', 'mapping'],
   data: () => ({
