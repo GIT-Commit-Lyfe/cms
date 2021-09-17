@@ -47,7 +47,7 @@ export default {
       mode: 'client'
     },
     {
-      src: '~/plugins/vue-product-zoomer.js',
+      src: '~/plugins/vue-silentbox.js',
       mode: 'client'
     }
   ],
