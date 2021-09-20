@@ -1,13 +1,14 @@
 <template>
-  <Dashboard />
+  <!-- <Dashboard /> -->
+  <div></div>
 </template>
 
 <script>
-import Dashboard from '@/components/dashboard'
+// import Dashboard from '@/components/dashboard'
 
 export default {
   components: {
-    Dashboard,
+    // Dashboard,
   }
 }
 </script>
