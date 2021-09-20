@@ -389,6 +389,8 @@ export default {
     copiedItem: {},
     copiedIndex: -1,
     dialogTransaction: false,
+    pastURLs: [],
+    currentURLs: [],
   }),
 
   mounted() {
@@ -526,12 +528,16 @@ export default {
         const { data } = await this.$axios.post('/api/upload', formData)
         this.uploadingImage[key] = false
         this.editedItem[key] = data.publicURL
+        this.currentURLs.push(data.publicURL)
         this.$forceUpdate()
       } catch (err) {
         alert(err.message)
       }
     },
     updateImage(key) {
+      if (this.editedItem[key]) {
+        this.pastURLs.push(this.editedItem[key])
+      }
       this.editedItem[key] = ''
       this.$forceUpdate()
     },
@@ -675,6 +681,7 @@ export default {
     },
 
     closeModal() {
+      this.removeUnusedURLs({ save: false });
       this.close()
       this.closeDelete()
       this.editedIndex = -1
@@ -711,8 +718,43 @@ export default {
             this.editedIndex = -1
           })
       }
+      this.removeUnusedURLs();
       this.close()
     },
+    async removeUnusedURLs(options = { save: true }) {
+      if (this.pastURLs.length === 0 && this.currentURLs.length === 0) {
+        return
+      }
+
+      let urls = [...this.pastURLs]
+      if (!options.save) { // if cancel saving
+        const unusedURLObj = {}
+        urls.splice(0, 1) // avoid first element to be removed
+        urls.forEach(url => {
+          unusedURLObj[url] = url
+        })
+        this.currentURLs.forEach(url => {
+          unusedURLObj[url] = url
+        })
+        urls = Object.values(unusedURLObj)
+      }
+
+      if (urls.length === 0 ) {
+        this.resetURLs()
+        return
+      }
+
+      try {
+        await this.$axios.post('/api/multi-delete-upload', { urls })
+        this.resetURLs()
+      } catch (err) {
+        // no logs
+      }
+    },
+    resetURLs() {
+      this.pastURLs = []
+      this.currentURLs = []
+    }
   },
 }
 </script>
