@@ -3,7 +3,12 @@
   "BezelMaterial": [{ "key": "name", "type": "string" }],
   "BraceletColor": [{ "key": "name", "type": "string" }],
   "BraceletMaterial": [{ "key": "name", "type": "string" }],
-  "Brand": [{ "key": "name", "type": "string" }],
+  "Brand": [
+    { "key": "name", "type": "string" },
+    { "key": "site", "type": "string" },
+    { "key": "description", "type": "textarea" },
+    { "key": "logoImage", "type": "file" }
+  ],
   "ClaspMaterial": [{ "key": "name", "type": "string" }],
   "Clasp": [{ "key": "name", "type": "string" }],
   "Condition": [{ "key": "name", "type": "string" }],

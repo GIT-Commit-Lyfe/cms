@@ -134,40 +134,37 @@
               <v-container>
                 <v-row  v-if="!dialogTransaction">
                   <v-col
-                    v-for="(item, index) in nonRelationModels"
-                    :key="index"
+                    v-for="(model, index) in nonRelationModels"
+                    :key="'01-'+index"
                     cols="12"
-                    :md="
-                      nonRelationModels.length < 4
-                        ? 12 / nonRelationModels.length
-                        : 3
-                    "
-                    :sm="
-                      nonRelationModels.length < 3
-                        ? 12 / nonRelationModels.length
-                        : 4
-                    "
+                    :md="md(nonRelationModels.length, model.type)"
+                    :sm="sm(nonRelationModels.length, model.type)"
                   >
+                    <v-textarea
+                      v-if="isTextArea(model)"
+                      clearable
+                      outlined
+                      rows="3"
+                      v-model="editedItem[model.key]"
+                      :label="fromCamelToLabel(model.key)"
+                    ></v-textarea>
                     <v-text-field
-                      v-model="editedItem[item.key]"
-                      :label="fromCamelToLabel(item.key)"
+                      v-else
+                      v-model="editedItem[model.key]"
+                      :label="fromCamelToLabel(model.key)"
                     ></v-text-field>
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction"></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction && relationModels.length > 0"></v-divider>
 
                 <v-row>
                   <v-col
                     v-for="(model, index) in relationModels"
-                    :key="index"
+                    :key="'02-'+index"
                     cols="12"
-                    :md="
-                      relationModels.length < 4 ? 12 / relationModels.length : 3
-                    "
-                    :sm="
-                      relationModels.length < 3 ? 12 / relationModels.length : 4
-                    "
+                    :md="md(relationModels.length, model.type)"
+                    :sm="sm(relationModels.length, model.type)"
                   >
                     <OptionsId
                       :model="model.key"
@@ -177,15 +174,15 @@
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction"></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction && fileModels.length > 0"></v-divider>
 
                 <v-row>
                   <v-col
                     v-for="(model, index) in fileModels"
-                    :key="index"
+                    :key="'03-'+index"
                     cols="12"
-                    :md="fileModels.length < 4 ? 12 / fileModels.length : 3"
-                    :sm="fileModels.length < 3 ? 12 / fileModels.length : 4"
+                    :md="md(fileModels.length, model.type)"
+                    :sm="sm(fileModels.length, model.type)"
                   >
                     <h3 class="mb-3">{{ fromCamelToLabel(model.key) }}</h3>
                     <v-progress-circular
@@ -302,7 +299,7 @@
       </v-row>
       <v-row>
         <v-chip-group class="mx-8 mb-8" column>
-          <v-chip close @click:close="removeTag(key)" v-for="(tag, key) in tags" :key="key">
+          <v-chip close @click:close="removeTag(key)" v-for="(tag, key) in tags" :key="'tag-' + key">
             {{ tag }}
           </v-chip>
         </v-chip-group>
@@ -329,7 +326,7 @@
     <template v-slot:[`body.prepend`]>
       <tr style="background: lightblue" v-if="copying || copiedIndex !== -1">
         <td></td>
-        <td v-for="(header, key) in headers" :key="key">
+        <td v-for="(header, key) in headers" :key="'data-' + key">
           <span v-if="header.value === 'no'"></span>
           <span v-else-if="header.value === 'createdAt' || header.value === 'updatedAt'">{{ toDate(items[copiedIndex][header.value]) }}</span>
           <span v-else>{{ items[copiedIndex][header.value] }}</span>
@@ -338,15 +335,33 @@
     </template>
     <template v-slot:expanded-item="{ item, headers }">
       <td :colspan="headers.length">
-        <v-img
-          class="white--text align-end"
-          v-for="(model, index) in fileModels"
-          :key="index"
-          :src="item[model.key]"
-          max-width="10%"
-          contain
-          ><v-card-title>{{ fromCamelToLabel(model.key) }}</v-card-title></v-img
-        >
+        <v-row>
+          <v-col class="pa-6" cols="3" v-for="(model, index) in fileModels" :key="'img-' + index">
+            <h2>{{ fromCamelToLabel(model.key) }}</h2>
+            <v-img
+              v-if="!!item[model.key]"
+              class="white--text align-end"
+              :src="item[model.key]"
+              width="150"
+              height="150"
+              contain
+              ></v-img
+            >
+            <span v-else>no image</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="pa-6" cols="6" v-for="(model, index) in textAreaModels" :key="'img1-' + index">
+            <v-textarea
+              disabled
+              clearable
+              outlined
+              rows="3"
+              v-model="editedItem[model.key]"
+              :label="fromCamelToLabel(model.key)"
+            ></v-textarea>
+          </v-col>
+        </v-row>
       </td>
     </template>
   </v-data-table>
@@ -400,6 +415,9 @@ export default {
   },
 
   computed: {
+    textAreaModels() {
+      return this.nonRelationModels.filter((model) => this.isTextArea(model))
+    },
     searchBar() {
       const tags = Object.values(this.tags)
       return tags.join(':')
@@ -422,7 +440,7 @@ export default {
       // console.log(idPopulatedHeaders, '<----')
       const nonIdHeaders = _.filter(
         this.mapping,
-        (item) => !/Id/.test(item.key)
+        (item) => !/Id/.test(item.key) && item.type === "string"
       )
       const idColumn = this.showId ? [idObj, ...idHeaders] : []
 
@@ -509,6 +527,26 @@ export default {
         console.log(err)
       }
       this.tableLoading = false
+    },
+
+    // column calculation
+    md(modelLengh, type) {
+      if (type === "textarea") {
+        return 6;
+      }
+      return modelLengh < 4 ? 12 / modelLengh : 3
+    },
+    sm(modelLengh, type) {
+      if (type === "textarea") {
+        return 8;
+      }
+      return modelLengh < 3 ? 12 / modelLengh : 4
+    },
+    isTextArea(item) {
+      if (!item) {
+        return false
+      }
+      return item.type === "textarea"
     },
 
     // event handlers
