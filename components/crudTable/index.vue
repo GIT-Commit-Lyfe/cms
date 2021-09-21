@@ -734,8 +734,10 @@ export default {
           )
           .then(({ data }) => {
             Object.assign(this.items[this.editedIndex], data)
+            this.removeUnusedURLs();
           })
           .catch((err) => {
+            this.removeUnusedURLs({ save: false });
             console.log(err)
           })
           .finally(() => {
@@ -747,8 +749,10 @@ export default {
           .post(`/api/cms/${this.model.name}`, this.editedItem)
           .then(({ data }) => {
             this.items.push(data)
+            this.removeUnusedURLs();
           })
           .catch((err) => {
+            this.removeUnusedURLs({ save: false });
             console.log(err)
           })
           .finally(() => {
@@ -756,7 +760,6 @@ export default {
             this.editedIndex = -1
           })
       }
-      this.removeUnusedURLs();
       this.close()
     },
     async removeUnusedURLs(options = { save: true }) {
