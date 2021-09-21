@@ -229,7 +229,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                :disabled="tableLoading"
+                :disabled="tableLoading || anyImageUploading()"
                 color="blue darken-1"
                 text
                 @click="closeModal"
@@ -237,7 +237,7 @@
                 Cancel
               </v-btn>
               <v-btn
-                :disabled="tableLoading"
+                :disabled="tableLoading || anyImageUploading()"
                 color="blue darken-1"
                 text
                 @click="save"
@@ -353,11 +353,9 @@
         <v-row>
           <v-col class="pa-6" cols="6" v-for="(model, index) in textAreaModels" :key="'img1-' + index">
             <v-textarea
-              disabled
-              clearable
               outlined
               rows="3"
-              v-model="editedItem[model.key]"
+              :value="item[model.key]"
               :label="fromCamelToLabel(model.key)"
             ></v-textarea>
           </v-col>
@@ -489,6 +487,9 @@ export default {
           case 'string':
             defaultObj[item.key] = ''
             break
+          case 'textarea':
+            defaultObj[item.key] = ''
+            break
           case 'file':
             defaultObj[item.key] = ''
             break
@@ -578,6 +579,10 @@ export default {
       }
       this.editedItem[key] = ''
       this.$forceUpdate()
+    },
+    anyImageUploading() {
+      const found = _.find(this.uploadingImage, (status) => status)
+      return !!found
     },
 
     seperateModels() {
