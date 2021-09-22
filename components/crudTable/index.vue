@@ -25,7 +25,7 @@
           Paste
         </v-btn>
         <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" :max-width="dialogWidth">
+        <v-dialog :persistent="anyImageUploading()" @click:outside="closeModal" v-model="dialog" :max-width="dialogWidth">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               Add {{ model.label }}
@@ -724,6 +724,9 @@ export default {
     },
 
     closeModal() {
+      if (this.anyImageUploading()) {
+        return
+      }
       this.removeUnusedURLs({ save: false });
       this.close()
       this.closeDelete()
