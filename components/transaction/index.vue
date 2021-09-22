@@ -35,9 +35,104 @@
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
+
+            <!-- transaction -->
+            <template v-if="dialogTransaction">
+              <v-divider class="mt-10 mb-5" horizontal></v-divider>
+
+              <v-row class="mt-2">
+                <v-col cols="12" md="5" class="px-5">
+                  <ImageThumbnail />
+                </v-col>
+
+                <v-col cols="12" md="7" class="px-5" >
+                  <template>
+                    <v-row class="mb-5" justify="start">
+                      <v-col cols="12" md="6" class="p-2">
+                        <v-card outlined >
+                          <v-list-item three-line>
+                            <v-list-item-content>
+                              <div class="text-overline mb-2">
+                                Seller
+                              </div>
+                              <v-list-item-title class="text-h5 mb-1">
+                                Seller Name
+                              </v-list-item-title>
+                              <v-list-item-subtitle>Lorem ipsum, dolor sit amet consectetur adipisicing</v-list-item-subtitle>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-card>
+                      </v-col>
+                      <v-col cols="12" md="6" class="p-2">
+                        <v-card outlined >
+                          <v-list-item three-line>
+                            <v-list-item-content>
+                              <div class="text-overline mb-2">
+                                Buyer
+                              </div>
+                              <v-list-item-title class="text-h5 mb-1">
+                                Buyer Name
+                              </v-list-item-title>
+                              <v-list-item-subtitle>Lorem ipsum dolor sit amet consectetur adipisicing elit.</v-list-item-subtitle>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+
+                    <div class="text-h5 mb-4 font-weight-light">Rolex Daytona 6240 Chronograph Verified Authentic by Rolex, EXTREMELY RARE</div>
+                    <div class="text-h4 bold font-weight-bold">$200,000</div>
+                    <div class="text-p mb-5" style="font-size: 11px;">Price option</div>
+                    <template>
+                      <div class="text-p mb-2">This Rolex Daytona 6240 Chronograph Vintage watch has been verified as authentic by Rolex. Authenticity report is available upon request. The reference 6240 was the first Daytona to incorporate screw-down pushers. Manufactured solely in stainless steel, the chronograph also features an acrylic tachometer bezel. In production from 1965 through 1969, approximately 1,700 pieces were made. The case is in overall good condition. Crystal glazing with light scratches. The dial is in overall good condition with some surface wear. The movement is running and chronograph is operating. Model No. 6240, Serial No. 1439065, Bracelet No. 6635/0. Comes with a new original Rolex travel pouch.
+                      </div>
+                    </template>
+                  </template>
+                </v-col>
+              </v-row>
+
+              <v-col>
+                <div class="text-h5 mt-10 pb-3">Transaction Status</div>
+                <template>
+                  <v-stepper alt-labels>
+                    <v-stepper-header>
+                      <v-stepper-step step="1" complete>
+                        Verification
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="2" complete >
+                        Paid
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="3" complete >
+                        Shipping
+                        <small class="pt-2">Lorem, ipsum.</small>
+                        <small class="pt-1">Lorem, ipsum.</small>
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step step="4" complete >
+                        Done
+                      </v-stepper-step>
+                      <v-divider></v-divider>
+
+                      <v-stepper-step :rules="[() => false]" step="5" >
+                        Pending
+                        <small class="pt-2">Pending message</small>
+                      </v-stepper-step>
+                    </v-stepper-header>
+                  </v-stepper>
+                </template>
+              </v-col>
+              <v-divider class="mt-10 mb-5" horizontal></v-divider>
+            </template>
+            <!-- end transaction -->
+
             <v-card-text>
               <v-container>
-                <v-row>
+                <v-row  v-if="!dialogTransaction">
                   <v-col
                     v-for="(model, index) in nonRelationModels"
                     :key="'01-'+index"
@@ -61,7 +156,7 @@
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal v-if="relationModels.length > 0"></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction && relationModels.length > 0"></v-divider>
 
                 <v-row>
                   <v-col
@@ -79,7 +174,7 @@
                   </v-col>
                 </v-row>
 
-                <v-divider class="mt-10 mb-5" horizontal v-if="fileModels.length > 0"></v-divider>
+                <v-divider class="mt-10 mb-5" horizontal v-if="!dialogTransaction && fileModels.length > 0"></v-divider>
 
                 <v-row>
                   <v-col
@@ -120,6 +215,16 @@
                 </v-row>
               </v-container>
             </v-card-text>
+
+            <v-col cols="12">
+              <v-textarea
+                outlined
+                name="description"
+                label="Description"
+                value="input update description"
+              ></v-textarea>
+            </v-col>
+            <v-divider class="mt-5 mb-5" horizontal v-if="dialogTransaction"></v-divider>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -263,11 +368,17 @@
 <script>
 import _ from 'lodash'
 import moment from 'moment'
-import OptionsId from './optionsId'
+import OptionsId from '../crudTable/optionsId'
+import Steppers from './stepper.vue'
+import BuyerSeller from './buyerSeller'
+import ImageThumbnail from './imageThumbnail.vue'
 
 export default {
   components: {
     OptionsId,
+    Steppers,
+    BuyerSeller,
+    ImageThumbnail,
   },
   props: ['model', 'mapping'],
   data: () => ({
@@ -290,6 +401,7 @@ export default {
     copying: false,
     copiedItem: {},
     copiedIndex: -1,
+    dialogTransaction: false,
     pastURLs: [],
     currentURLs: [],
   }),
@@ -297,6 +409,7 @@ export default {
   mounted() {
     this.fetchData()
     this.seperateModels()
+    this.specialTransaction()
   },
 
   computed: {
@@ -489,6 +602,12 @@ export default {
     },
     fromCamelToLabel(text) {
       return _.startCase(text)
+    },
+    specialTransaction() {
+      if (this.model.label === 'Transaction') {
+        this.dialogTransaction = true
+        this.dialogWidth = '90vw'
+      }
     },
     copyItem(item) {
       if (this.tableLoading) {

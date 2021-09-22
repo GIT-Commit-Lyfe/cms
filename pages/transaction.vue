@@ -12,7 +12,7 @@
 <script>
 import _ from 'lodash'
 import models from '@/API/models.json'
-import Transaction from '@/components/crudTable'
+import Transaction from '@/components/transaction'
 
 export default {
   data() {
