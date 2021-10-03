@@ -264,6 +264,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import OptionsId from './optionsId'
+import ls from '@/utils/secure-ls'
 
 export default {
   components: {
@@ -322,7 +323,6 @@ export default {
         key: item.key.replace(/Id/, ''),
         type: 'string',
       }))
-      // console.log(idPopulatedHeaders, '<----')
       const nonIdHeaders = _.filter(
         this.mapping,
         (item) => !/Id/.test(item.key) && item.type === "string"
@@ -337,6 +337,10 @@ export default {
         ...idColumn,
         ...idPopulatedHeaders,
         ...nonIdHeaders,
+        {
+          key: 'author',
+          type: 'string',
+        },
         {
           key: 'createdAt',
           type: 'date',
@@ -409,12 +413,19 @@ export default {
     async fetchData() {
       try {
         this.tableLoading = true
-        const { data } = await this.$axios.get(`/api/cms/${this.model.name}`)
+        const token = this.getCmsToken()
+        const { data } = await this.$axios.get(
+          `/api/cms/${this.model.name}`,
+          { headers: { Authorization: `Bearer ${token}` }}
+        )
         this.items = _.cloneDeep(data)
       } catch (err) {
         console.log(err)
       }
       this.tableLoading = false
+    },
+    getCmsToken() {
+      return ls.get('cms:token')
     },
 
     // column calculation
@@ -451,7 +462,10 @@ export default {
       try {
         this.uploadingImage[key] = true
         this.$forceUpdate()
-        const { data } = await this.$axios.post('/api/upload', formData)
+        const { data } = await this.$axios.post(
+          '/api/upload',
+          formData
+        )
         this.uploadingImage[key] = false
         this.editedItem[key] = data.publicURL
         this.currentURLs.push(data.publicURL)
@@ -511,10 +525,15 @@ export default {
     },
     pasteCopying() {
       this.tableLoading = true
+      const token = this.getCmsToken()
       this.$axios
-        .post(`/api/cms/${this.model.name}`, this.copiedItem)
+        .post(
+          `/api/cms/${this.model.name}`,
+          this.copiedItem,
+          { headers: { Authorization: `Bearer ${token}` }}
+        )
         .then(({ data }) => {
-          this.items.push(data)
+          this.items.unshift(data)
         })
         .catch((err) => {
           console.log(err)
@@ -573,9 +592,11 @@ export default {
 
     deleteItemConfirm() {
       this.tableLoading = true
+      const token = this.getCmsToken()
       this.$axios
         .delete(
-          `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`
+          `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`,
+          { headers: { Authorization: `Bearer ${token}` }}
         )
         .then(() => {
           this.items.splice(this.editedIndex, 1)
@@ -615,11 +636,13 @@ export default {
     },
     save() {
       this.tableLoading = true
+      const token = this.getCmsToken()
       if (this.editedIndex > -1) {
         this.$axios
           .patch(
             `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`,
-            this.editedItem
+            this.editedItem,
+            { headers: { Authorization: `Bearer ${token}` }}
           )
           .then(({ data }) => {
             Object.assign(this.items[this.editedIndex], data)
@@ -635,9 +658,13 @@ export default {
           })
       } else {
         this.$axios
-          .post(`/api/cms/${this.model.name}`, this.editedItem)
+          .post(
+            `/api/cms/${this.model.name}`,
+            this.editedItem,
+            { headers: { Authorization: `Bearer ${token}` }}
+          )
           .then(({ data }) => {
-            this.items.push(data)
+            this.items.unshift(data)
             this.removeUnusedURLs();
           })
           .catch((err) => {

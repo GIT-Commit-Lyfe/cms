@@ -1,5 +1,4 @@
-import SecureLs from 'secure-ls'
-let ls = new SecureLs()
+import ls from '@/utils/secure-ls'
 
 export const state = () => ({
   token: null,
