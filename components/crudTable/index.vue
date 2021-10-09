@@ -1,7 +1,9 @@
 <template>
   <v-data-table
+    v-model="selected"
     show-expand
     single-expand
+    show-select
     @pagination="pagination"
     :loading="tableLoading"
     :headers="headers"
@@ -23,6 +25,9 @@
         </v-btn>
         <v-btn v-if="copying" plain color="primary" @click="pasteCopying" dark>
           Paste
+        </v-btn>
+        <v-btn v-if="multiDeletion" plain color="error" @click="dialogDeleteMultiple = true" dark>
+          Delete
         </v-btn>
         <v-spacer></v-spacer>
         <v-dialog :persistent="anyImageUploading()" @click:outside="closeModal" v-model="dialog" :max-width="dialogWidth">
@@ -161,7 +166,32 @@
                 :disabled="tableLoading"
                 color="blue darken-1"
                 text
-                @click="deleteItemConfirm"
+                @click="deleteItemConfirm()"
+                >OK</v-btn
+              >
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="dialogDeleteMultiple" max-width="600px">
+          <v-card>
+            <v-card-title class="text-h5 pt-10 pb-5"
+              >Are you sure you want to delete these {{selectedIds.length}} items?</v-card-title
+            >
+            <v-card-actions class="pb-5">
+              <v-spacer></v-spacer>
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="closeModal"
+                >Cancel</v-btn
+              >
+              <v-btn
+                :disabled="tableLoading"
+                color="blue darken-1"
+                text
+                @click="deleteItemConfirm(true)"
                 >OK</v-btn
               >
               <v-spacer></v-spacer>
@@ -273,6 +303,7 @@ export default {
   props: ['model', 'mapping'],
   data: () => ({
     search: '',
+    selected: [],
     tags: {},
     paginationInfo: {},
     tableLoading: false,
@@ -281,6 +312,7 @@ export default {
     width: '200px',
     dialogWidth: '1000px',
     dialogDelete: false,
+    dialogDeleteMultiple: false,
     items: [],
     relationModels: [],
     nonRelationModels: [],
@@ -301,6 +333,12 @@ export default {
   },
 
   computed: {
+    multiDeletion() {
+      return this.selectedIds.length > 0
+    },
+    selectedIds() {
+      return this.selected.map(item => item.id)
+    },
     textAreaModels() {
       return this.nonRelationModels.filter((model) => this.isTextArea(model))
     },
@@ -590,24 +628,45 @@ export default {
       this.dialogDelete = true
     },
 
-    deleteItemConfirm() {
+    deleteItemConfirm(multiple = false) {
       this.tableLoading = true
       const token = this.getCmsToken()
-      this.$axios
-        .delete(
-          `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`,
-          { headers: { Authorization: `Bearer ${token}` }}
-        )
-        .then(() => {
-          this.items.splice(this.editedIndex, 1)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          this.tableLoading = false
-          this.editedIndex = -1
-        })
+      if (multiple) {
+        const idQuery = this.selectedIds.join(",")
+        this.$axios
+          .delete(
+            `/api/cms/${this.model.name}?multiple=1&id=${idQuery}`,
+            { headers: { Authorization: `Bearer ${token}` }}
+          )
+          .then(() => {
+            //----
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .finally(() => {
+            this.tableLoading = false
+            this.editedIndex = -1
+            this.selected = []
+            this.fetchData()
+          })
+      } else {
+        this.$axios
+          .delete(
+            `/api/cms/${this.model.name}?id=${this.items[this.editedIndex].id}`,
+            { headers: { Authorization: `Bearer ${token}` }}
+          )
+          .then(() => {
+            this.items.splice(this.editedIndex, 1)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .finally(() => {
+            this.tableLoading = false
+            this.editedIndex = -1
+          })
+      }
       this.closeDelete()
     },
 
@@ -620,6 +679,7 @@ export default {
 
     closeDelete() {
       this.dialogDelete = false
+      this.dialogDeleteMultiple = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
       })

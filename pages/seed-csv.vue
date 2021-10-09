@@ -76,6 +76,7 @@
 <script>
 import Papa from 'papaparse'
 import _ from 'lodash'
+import ls from '@/utils/secure-ls'
 // import SnackBar from '@/components/alert/snackBar'
 import Models from '@/API/models.json'
 // import { mapActions } from 'vuex'
@@ -109,11 +110,20 @@ export default {
   },
 
   methods: {
+    getCmsToken() {
+      return ls.get('cms:token')
+    },
+
     async fileSubmit() {
       try {
+        const token = this.getCmsToken()
         let formData = new FormData()
         formData.append('file', this.fileInput)
-        await this.$axios.post(`/api/seed/${this.modelSelected}`, formData);
+        await this.$axios.post(
+          `/api/seed/${this.modelSelected}`,
+          formData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         this.reset();
       } catch (err) {
         console.log(err);
