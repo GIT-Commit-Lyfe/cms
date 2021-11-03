@@ -10,7 +10,7 @@
 
     <v-col cols="12" md="8">
       <v-layout wrap justify-center align-center fill-height>
-        <v-col cols="12" md="5">
+        <v-col cols="12" md="5" class="px-5">
           <h2 class="pb-10">Login to CMS</h2>
           <v-form lazy-validation>
             <v-text-field
@@ -18,7 +18,6 @@
               v-model="form.username"
               label="Username"
               :rules="nameRules"
-              solo
               required
             >
             </v-text-field>
@@ -31,14 +30,22 @@
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="passRules"
               counter
-              solo
               required
               @keydown.enter="login"
               @click:append="showPassword = !showPassword"
             ></v-text-field>
 
-            <v-btn @click="login" class="signin px-10" :loading="loading" color="success"> Login </v-btn>
+            <v-btn 
+              @click="login"
+              dark
+              elevation="1"
+              :loading="loading" 
+              class="px-10 mt-10 justify-center" 
+              color="teal darken-1"
+              > Login 
+            </v-btn>
           </v-form>
+
         </v-col>
       </v-layout>
     </v-col>
@@ -104,7 +111,8 @@ export default {
   .blank {
     padding: 6% 5%;
     color: white;
-    background-color: #cfba9b;
+    background: url(~assets/images/bg-login.jpg) no-repeat top right;
+    background-size: cover;
   }
 
   @media (max-width: 768px) {
