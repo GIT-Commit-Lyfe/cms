@@ -10,6 +10,7 @@
     :items="items"
     :search="searchBar"
     :custom-filter="customFilter"
+    show-select
     class="elevation-1"
   >
     <template v-slot:top>
@@ -19,7 +20,17 @@
         <v-btn color="primary" dark plain @click="toggleId">
           {{ showId ? 'Hide ID' : 'Show ID' }}
         </v-btn>
+        <v-form @submit="addTag" class="search">
+          <v-text-field
+            v-model="search"
+            label="Search"
+            class="mx-4"
+            hide-details="auto"
+          ></v-text-field>
+        </v-form>
+
         <v-spacer></v-spacer>
+
         <v-btn v-if="copying" plain color="grey" dark @click="cancelCopying">
           Cancel
         </v-btn>
@@ -201,26 +212,14 @@
       </v-toolbar>
       <v-row>
         <v-spacer></v-spacer>
-        <v-col cols="12" md="4">
-          <v-form @submit="addTag">
-            <v-text-field
-              v-model="search"
-              label="Search"
-              class="mx-4"
-            ></v-text-field>
-          </v-form>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-spacer></v-spacer>
         <v-btn
           v-if="Object.values(tags).length > 0"
           class="mx-4"
           color="red"
           plain
           @click="clearTags"
-          >Clear tags</v-btn
-        >
+          >Clear tags
+        </v-btn>
       </v-row>
       <v-row>
         <v-chip-group class="mx-8 mb-8" column>
@@ -536,6 +535,9 @@ export default {
     toggleId() {
       this.showId = !this.showId
     },
+    toggleCheckbox() {
+      this.showCheckbox = !this.showCheckbox
+    },
     toDate(item) {
       return moment(item).fromNow()
     },
@@ -775,3 +777,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.search .v-text-field__details .theme--light.v-messages {
+  display: none;
+}
+</style>

@@ -36,7 +36,6 @@ export default {
         'Audit',
         'Bezel',
         'Boutique',
-        'Bracelet Color',
         'Bracelet',
         'Brand',
         'Caliber',

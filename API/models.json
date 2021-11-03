@@ -31,8 +31,6 @@
     { "key": "UserId", "type": "number" }
   ],
 
-  "BraceletColor": [{ "key": "name", "type": "string" }],
-  
   "Bracelet": [
     { "key": "name", "type": "string" },
     { "key": "material", "type": "string" },
