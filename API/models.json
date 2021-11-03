@@ -1,20 +1,44 @@
 {
   "Accompany": [{ "key": "name", "type": "string" }],
-  "BezelMaterial": [{ "key": "name", "type": "string" }],
+
+  "Audit": [
+    { "key": "table", "type": "string" },
+    { "key": "data", "type": "number" },
+    { 
+      "key": "status", 
+      "type": "string", 
+      "value": ["created", "seeded", "updated", "deleted"] 
+    },
+    { "key": "UserId", "type": "number" }
+  ],
+  
+  "Bezel": [
+    { "key": "name", "type": "string" },
+    { "key": "material", "type": "string" },
+    { "key": "partNumber", "type": "string" },
+    { "key": "color", "type": "string" },
+    { "key": "BrandId", "type": "number" }
+  ],
+
   "BraceletColor": [{ "key": "name", "type": "string" }],
-  "BraceletMaterial": [{ "key": "name", "type": "string" }],
+  
+  "Bracelet": [
+    { "key": "name", "type": "string" },
+    { "key": "material", "type": "string" },
+    { "key": "partNumber", "type": "string" },
+    { "key": "color", "type": "string" },
+    { "key": "lugWidth", "type": "number" },
+    { "key": "claspWidth", "type": "number" },
+    { "key": "BrandId", "type": "number" }
+  ],
+
   "Brand": [
     { "key": "name", "type": "string" },
     { "key": "site", "type": "string" },
-    { "key": "description", "type": "textarea" },
-    { "key": "logoImage", "type": "file" }
+    { "key": "description", "type": "string" },
+    { "key": "logoImage", "type": "string" },
+    { "key": "isWatch", "type": "boolean" }
   ],
-  "ClaspMaterial": [{ "key": "name", "type": "string" }],
-  "Clasp": [{ "key": "name", "type": "string" }],
-  "Condition": [{ "key": "name", "type": "string" }],
-  "DialMaterial": [{ "key": "name", "type": "string" }],
-  "WatchFunction": [{ "key": "name", "type": "string" }],
-  "Movement": [{ "key": "name", "type": "string" }],
 
   "Boutique": [
     { "key": "name", "type": "string" },
@@ -26,7 +50,7 @@
     { "key": "latitude", "type": "number" },
     { "key": "UserId", "type": "number" }
   ],
-
+  
   "Caliber": [
     { "key": "name", "type": "string" },
     { "key": "BrandId", "type": "number" }
@@ -35,6 +59,45 @@
   "Collection": [
     { "key": "name", "type": "string" },
     { "key": "BrandId", "type": "number" }
+  ],
+
+  "Crystal" : [{ "key": "name", "type": "string" }],
+  "ClaspMaterial": [{ "key": "name", "type": "string" }],
+
+  "Clasp": [
+    { "key": "name", "type": "string" },
+    { "key": "material", "type": "string" },
+    { "key": "partNumber", "type": "string" },
+    { "key": "color", "type": "string" },
+    { "key": "claspWidth", "type": "number" },
+    { "key": "BrandId", "type": "number" }
+  ],
+
+  "Condition": [{ "key": "name", "type": "string" }],
+  
+  "Dial": [
+    { "key": "name", "type": "string" },
+    { "key": "partNumber", "type": "string" },
+    { "key": "color", "type": "string" },
+    { "key": "dialStyle", "type": "string" },
+    { "key": "indexMaterial", "type": "string" },
+    { "key": "BrandId", "type": "number" }
+  ],
+
+  "Movement": [
+    { "key": "caliberNumber", "type": "string" },
+    { "key": "numberOfJewel", "type": "number" },
+    { "key": "powerReserved", "type": "number" },
+    { "key": "BrandId", "type": "number" },
+    { "key": "MovementTypeId", "type": "number" }
+  ],
+  
+  "MovementType": [
+    { 
+      "key": "name", 
+      "type": "string",
+      "value": ["SelfWinding, Manual, Quartz"]
+    }
   ],
   
   "Product": [
@@ -114,6 +177,8 @@
     "value": ["pending", "verified", "blocked"]
   }],
 
+  "UnusedFile": [{ "key": "url", "type": "string" }],
+
   "User": [
     { "key": "firstName", "type": "string" },
     { "key": "middleName", "type": "string" },
@@ -132,30 +197,34 @@
     { "key": "StatusId", "type": "number" }
   ],
 
+  "WatchFunction": [{ "key": "name", "type": "string" }],
+
+  "WatchFunctionModel": [
+    { "key": "WatchModelId", "type": "number" },
+    { "key": "WatchFunctionId", "type": "number" }
+  ],
+  
   "WatchModel": [
     { "key": "referenceNumber", "type": "string" },
+    { "key": "ticker", "type": "string" },
+    { "key": "significantEdition", "type": "string" },
+    { "key": "streetName", "type": "string" },
     { "key": "modelImage", "type": "file" },
     { "key": "caseMaterial", "type": "string" },
     { "key": "caseDiameter", "type": "number" },
     { "key": "caseThickness", "type": "number" },
     { "key": "waterResistance", "type": "number" },
-    { "key": "glass", "type": "string" },
-    { "key": "streetName", "type": "string" },
-    { "key": "lugWidth", "type": "string" },
     { "key": "introducedAt", "type": "string" },
     { "key": "discontinuedAt", "type": "string" },
-    { "key": "powerReserved", "type": "number" },
-    { "key": "numberOfJewel", "type": "integer" },
-    { "key": "dialNumeral", "type": "string" },
+    { "key": "lugWidth", "type": "string" },
     { "key": "otherInfo", "type": "string" },
     { "key": "CollectionId", "type": "number" },
     { "key": "CaliberId", "type": "number" },
     { "key": "MovementId", "type": "number" },
-    { "key": "BezelMaterialId", "type": "number" },
-    { "key": "BraceletMaterialId", "type": "number" },
-    { "key": "BraceletColorId", "type": "number" },
+    { "key": "BezellId", "type": "number" },
+    { "key": "DialId", "type": "number" },
+    { "key": "BraceletId", "type": "number" },
     { "key": "ClaspId", "type": "number" },
-    { "key": "ClaspMaterialId", "type": "number" },
-    { "key": "WatchFunctionId", "type": "number" }
+    { "key": "CrystalId", "type": "number" }
   ]
 }
