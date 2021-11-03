@@ -19,6 +19,17 @@
     { "key": "color", "type": "string" },
     { "key": "BrandId", "type": "number" }
   ],
+  
+  "Boutique": [
+    { "key": "name", "type": "string" },
+    { "key": "description", "type": "string" },
+    { "key": "address", "type": "string" },
+    { "key": "fullAddress", "type": "string" },
+    { "key": "avatar", "type": "string" },
+    { "key": "longitude", "type": "number" },
+    { "key": "latitude", "type": "number" },
+    { "key": "UserId", "type": "number" }
+  ],
 
   "BraceletColor": [{ "key": "name", "type": "string" }],
   
@@ -39,17 +50,6 @@
     { "key": "logoImage", "type": "string" },
     { "key": "isWatch", "type": "boolean" }
   ],
-
-  "Boutique": [
-    { "key": "name", "type": "string" },
-    { "key": "description", "type": "string" },
-    { "key": "address", "type": "string" },
-    { "key": "fullAddress", "type": "string" },
-    { "key": "avatar", "type": "string" },
-    { "key": "longitude", "type": "number" },
-    { "key": "latitude", "type": "number" },
-    { "key": "UserId", "type": "number" }
-  ],
   
   "Caliber": [
     { "key": "name", "type": "string" },
@@ -61,9 +61,6 @@
     { "key": "BrandId", "type": "number" }
   ],
 
-  "Crystal" : [{ "key": "name", "type": "string" }],
-  "ClaspMaterial": [{ "key": "name", "type": "string" }],
-
   "Clasp": [
     { "key": "name", "type": "string" },
     { "key": "material", "type": "string" },
@@ -72,8 +69,9 @@
     { "key": "claspWidth", "type": "number" },
     { "key": "BrandId", "type": "number" }
   ],
-
+  
   "Condition": [{ "key": "name", "type": "string" }],
+  "Crystal" : [{ "key": "name", "type": "string" }],
   
   "Dial": [
     { "key": "name", "type": "string" },
@@ -171,13 +169,13 @@
     "value": ["done", "shipping", "verivication", "paid", "pending"]
   }],
 
+  "UnusedFile": [{ "key": "url", "type": "string" }],
+  
   "UserStatus": [{ 
     "key": "name",
     "type": "string",
     "value": ["pending", "verified", "blocked"]
   }],
-
-  "UnusedFile": [{ "key": "url", "type": "string" }],
 
   "User": [
     { "key": "firstName", "type": "string" },
