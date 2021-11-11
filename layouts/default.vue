@@ -122,7 +122,7 @@ export default {
           to: '/seed-csv',
         },
         {
-          icon: 'mdi-buffer',
+          icon: 'mdi-cash',
           title: 'Transaction',
           to: '/transaction',
         },
