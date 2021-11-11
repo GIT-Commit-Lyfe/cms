@@ -69,6 +69,11 @@
                       v-model="editedItem[model.key]"
                       :label="fromCamelToLabel(model.key)"
                     ></v-textarea>
+                    <v-switch
+                      v-else-if="isBoolean(model)"
+                      v-model="editedItem[model.key]"
+                      :label="fromCamelToLabel(model.key)"
+                    ></v-switch>
                     <v-text-field
                       v-else
                       v-model="editedItem[model.key]"
@@ -362,7 +367,7 @@ export default {
       }))
       const nonIdHeaders = _.filter(
         this.mapping,
-        (item) => !/Id/.test(item.key) && item.type === "string"
+        (item) => !/Id/.test(item.key) && (item.type === "string" || item.type === "boolean")
       )
       const idColumn = this.showId ? [idObj, ...idHeaders] : []
 
@@ -424,6 +429,9 @@ export default {
           case 'number':
             defaultObj[item.key] = -1
             break
+          case 'boolean':
+            defaultObj[item.key] = false
+            break
           default:
             break
         }
@@ -483,6 +491,12 @@ export default {
         return false
       }
       return item.type === "textarea"
+    },
+    isBoolean(item) {
+      if (!item) {
+        return false
+      }
+      return item.type === "boolean"
     },
 
     // event handlers

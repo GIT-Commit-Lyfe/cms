@@ -22,7 +22,7 @@
   
   "Boutique": [
     { "key": "name", "type": "string" },
-    { "key": "description", "type": "string" },
+    { "key": "description", "type": "textarea" },
     { "key": "address", "type": "string" },
     { "key": "fullAddress", "type": "string" },
     { "key": "avatar", "type": "string" },
@@ -44,8 +44,8 @@
   "Brand": [
     { "key": "name", "type": "string" },
     { "key": "site", "type": "string" },
-    { "key": "description", "type": "string" },
-    { "key": "logoImage", "type": "string" },
+    { "key": "description", "type": "textarea" },
+    { "key": "logoImage", "type": "file" },
     { "key": "isWatch", "type": "boolean" }
   ],
   
@@ -100,7 +100,7 @@
     { "key": "year", "type": "string" },
     { "key": "price", "type": "number" },
     { "key": "currency", "type": "string" },
-    { "key": "description", "type": "string" },
+    { "key": "description", "type": "textarea" },
     { "key": "topImage", "type": "string" },
     { "key": "crownSideImage", "type": "string" },
     { "key": "caseBackImage", "type": "string" },
@@ -149,7 +149,7 @@
   ],
 
   "TransactionInfo": [
-    { "key": "description", "type": "string" },
+    { "key": "description", "type": "textarea" },
     { "key": "TransactionId", "type": "number" },
     { "key": "StatusId", "type": "number" }
   ],
