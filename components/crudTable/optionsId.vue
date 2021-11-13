@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import ls from '@/utils/secure-ls'
+
 export default {
   props: [
     "model",
@@ -49,7 +51,11 @@ export default {
     async fetchOptions() {
       try {
         const modelName = this.model.replace("Id", "");
-        const { data } = await this.$axios.get(`/api/cms/${modelName}`);
+        const token = this.getCmsToken()
+        const { data } = await this.$axios.get(
+          `/api/cms/${modelName}`,
+          { headers: { Authorization: `Bearer ${token}` }}
+        );
         this.options = _.cloneDeep(data);
         this.optionLabels = this.options.map((item) => item.name);
       } catch (err) {
@@ -57,6 +63,9 @@ export default {
       }
     },
 
+    getCmsToken() {
+      return ls.get('cms:token')
+    },
     findOption() {
       if (!this.modelId || this.modelId === -1) {
         this.value = "";
