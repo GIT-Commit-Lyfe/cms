@@ -213,6 +213,7 @@
     { "key": "introducedAt", "type": "string" },
     { "key": "discontinuedAt", "type": "string" },
     { "key": "lugWidth", "type": "string" },
+    { "key": "isFemale", "type": "boolean" },
     { "key": "otherInfo", "type": "string" },
     { "key": "CollectionId", "type": "number" },
     { "key": "CaliberId", "type": "number" },
