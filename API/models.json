@@ -46,7 +46,8 @@
     { "key": "site", "type": "string" },
     { "key": "description", "type": "textarea" },
     { "key": "logoImage", "type": "file" },
-    { "key": "isWatch", "type": "boolean" }
+    { "key": "isWatch", "type": "boolean" },
+    { "key": "isPremium", "type": "boolean" }
   ],
   
   "Caliber": [

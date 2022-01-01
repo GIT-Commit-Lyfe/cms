@@ -10,7 +10,6 @@
     :items="items"
     :search="searchBar"
     :custom-filter="customFilter"
-    show-select
     class="elevation-1"
   >
     <template v-slot:top>
